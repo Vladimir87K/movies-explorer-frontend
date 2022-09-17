@@ -1,6 +1,9 @@
-@import url(../../index.css);
+.page {
+  margin: 0 70px;
+  outline: 1px solid green;
+}
 
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -37,4 +40,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
