@@ -18,8 +18,9 @@ const Header = (props) => {
         <nav className='header__navigate'>
           <a className='header__navigate_link' href='#'>Фильмы</a>
           <a className='header__navigate_link' href='#'>Сохраненные фильмы</a>
-          <a className='header__navigate_link' href='#'>Аккаунт<img src={landing} alt="иконка" className='header__link_icon'/></a>
+          <a className='header__navigate_link' href='#'>Аккаунт<p className='header__link_icon'></p></a>
         </nav>
+        <button className='header__burger'></button>
     </header>
 
   );

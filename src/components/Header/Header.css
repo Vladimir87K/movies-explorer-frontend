@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo {
@@ -23,18 +24,26 @@
  margin-left: 10px 0 0 0;
  padding: 8px 20px;
  height: 32px;
+ font-weight: 500;
+ font-size: 12px;
+ line-height: 16px;
 }
 
-.header__entrance_btn:hover {
+.header__entrance_btn:last-child {
   background: #3456F3;
   border-radius: 3px;
   color: #fff;
+}
+
+.header__entrance_btn:hover {
   cursor: pointer;
+  color: #808080;
 }
 
 .header__navigate {
   display: flex;
   align-items: center;
+  /* display: none; */
 }
 
 .header__navigate_link {
@@ -44,19 +53,68 @@
   color: #000;
   background: #fff;
   border: none;
-  margin-left: 10px 0 0 0;
-  padding: 8px 20px;
+  margin-left: 20px;
+  padding: 8px 0;
   height: 32px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.header__navigate_link:last-child {
+  margin-left: 50px;
 }
 
 .header__navigate_link:hover {
-  background: #3456F3;
-  border-radius: 3px;
-  color: #fff;
+  color: #808080;
   cursor: pointer;
 }
 
 .header__link_icon {
   width: 30px;
-  background: #fff;
+  height: 30px;
+  background: #F4F4F4;
+  background-image: url(../../images/icon-accaunt.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 6px;
+  margin-left: 13px;
+}
+
+.header__burger {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background-color: #fff;
+  background-image: url(../../images/icon-burger-menu.svg);
+  background-position: center;
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .header__navigate_link {
+    display: none;
+  }
+
+  .header__entrance {
+    display: none;
+  }
+
+  .header__burger {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header__logo {
+    margin: 18px 0 0 4px;
+  }
+
+  .header__entrance_btn {
+    font-size: 10px;
+   }
+
+  .header__burger {
+    margin-top: 15px;
+  }
 }
