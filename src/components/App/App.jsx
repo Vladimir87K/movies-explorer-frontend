@@ -1,17 +1,17 @@
 import './App.css';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer'
+import Aboutme from '../Aboutme/Aboutme'
+import Footer from '../Footer/Footer';
 
 const App = () => {
  
   return (
     <div className='page'>
       <Header />
+      <Aboutme />
       <Footer />
     </div>
   );
 }
-
-console.log(App);
 
 export default App;

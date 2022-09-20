@@ -2,7 +2,6 @@ import React  from 'react';
 //import { useNavigate } from "react-router-dom";
 import './Header.css';
 import logo from '../../images/logo.svg';
-import landing from '../../images/icon-accaunt.svg';
 
 const Header = (props) => {
 

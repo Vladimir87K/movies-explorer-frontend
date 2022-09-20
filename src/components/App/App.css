@@ -1,13 +1,10 @@
 .page {
-  margin: 0 70px;
+  margin: 0 auto;
   outline: 1px solid green;
+  display: flex;
+  flex-direction: column;
 }
 
-@media screen and (max-width: 480px) {
-  .page {
-    margin: 0 10px;
-  }  
-}
 /* .App {
   text-align: center;
 }
