@@ -1,6 +1,6 @@
 import './App.css';
 import Header from '../Header/Header';
-import Aboutme from '../Aboutme/Aboutme'
+import Main from '../Main/Main'
 import Footer from '../Footer/Footer';
 
 const App = () => {
@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div className='page'>
       <Header />
-      <Aboutme />
+      <Main />
       <Footer />
     </div>
   );

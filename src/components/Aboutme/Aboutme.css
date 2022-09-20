@@ -1,161 +1,9 @@
 .about {
-}
-
-.title-page {
-  padding: 50px 70px 60px;
-  background-color: #DDDEE3;
-  overflow: hidden;
-}
-
-.title-page__title {
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 52px;
-  width: 626px;
-  margin: 0 0 100px;
-}
-
-.title-page__image {    /* картинка на титульной страничке, требует внимательной расстановки*/
-  background-image: url(../../images/landing-logo.svg);
-  object-position: center;
-  max-width: 722px; 
-  height: 244px;
-  margin-left: auto;
-  /* align-self: self-end; */
-}
-
-.project {
   background-color: #FAFAFA;
-  padding: 110px 70px;
+  padding: 110px 70px 100px;
 }
 
-.project__title {
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 27px;
-  border-bottom: 1px solid #000;
-  margin-bottom:  70px;
-  padding-bottom: 23px;
-}
-
-.project__tab {
-  display: flex;
-  margin-bottom:  110px;
-}
-
-.project__tab_column {
-  margin-right: 40px;
-}
-
-.project__tab_column:last-child {
-  margin-right: 0;
-}
-
-.project__tab_title {
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  margin: 0 0 25px;
-}
-
-.project__tab_paragraph {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  margin: 0;
-}
-
-.project__diagram {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: 2;
-  grid-gap: 14px 0;
-  text-align: center;
-}
-
-.project__diagram_title {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16.94px;
-  margin: 0;
-  padding: 11px 0;
-  text-align: center;
-  background-color: #F2F2F2;
-}
-
-.project__diagram_title:first-child {
-  color: #fff;
-  background-color: #3456F3;
-}
-
-.project__diagram_subtitle {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  margin: 0;
-  color: #A0A0A0;
-}
-
-.technology {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 100px 70px 90px;
-  background-color: #F5F5F5;
-}
-
-.technology__colontitul {
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 27px;
-  border-bottom: 1px solid #000;
-  padding-bottom: 23px;
-  margin: 0 0 90px;
-  align-self: start;
-}
-
-.technology__title{
-  font-weight: 400;
-  font-size: 50px;
-  line-height: 58px;
-  margin: 0 0 26px;
-  text-align: center;
-}
-
-.technology__subtitle {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  margin: 0 auto 100px;
-  text-align: center;
-  max-width: 460px;
-}
-
-.technology__collection {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.technology__type {
-  background-color: #E8E8E8;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  width: 90px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin:0;
-  border-radius: 10px;
-}
-
-.student {
-  background-color: #FAFAFA;
-  padding: 110px 70px 105px;
-}
-
-.student__colontitul {
+.about__colontitul {
   font-weight: 400;
   font-size: 22px;
   line-height: 27px;
@@ -164,42 +12,43 @@
   margin: 0 0 90px;
 }
 
-.student__info {
+.about__info {
   display: flex;
   justify-content: space-between;
   position: relative;
-  margin-bottom: 100px;
 }
 
-.student__info-container {
-  max-width: 600px;
+.about__info-container {
   display: flex;
   flex-direction: column;
   justify-content: start;
+  max-width: 60%;
 }
 
-.student__info-title {
+.about__info-title {
   font-weight: 400;
   font-size: 50px;
   line-height: 58px;
   margin: 0 0 18px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.student__info-subtitle {
+.about__info-subtitle {
   font-weight: 500;
   font-size: 18px;
   line-height: 20px;
   margin: 0 0 26px;
 }
 
-.student__info-history{
+.about__info-history{
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
   margin: 0 0 25px;
 }
 
-.student__info-link {
+.about__info-link {
   text-decoration: none;
   position: absolute;
   left: 0;
@@ -210,91 +59,19 @@
   color: #000;
 }
 
-.student__portfolio-title {
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 20px;
-  color: #A0A0A0;
-  margin: 0 0 50px;
+.about__info-img {
+  max-width: 270px;
 }
 
-.student__portfolio_link {
-  text-decoration: none;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #E8E8E8;
-  padding: 20px 0;
-  box-sizing: border-box;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 50px;
-}
-
-.student__portfolio_link:last-child {
-  border-bottom: 0px;
-}
-
-.student__link_name {
-  color: #000;
-  margin: 0;
-}
-
-.student__link_img {
-  width: 30px;
-}
-
-@media screen and (max-width: 868px) {
-  .title-page {
-    padding: 300px 44px 70px;
+@media screen and (max-width: 868px)  {
+  .about {
+    padding: 90px 50px 90px;
   }
 
-  .title-page__title {
-    text-align: center;
-    width: auto;
-    margin: 0 0 140px;
+  .about__info-container {
+    max-width: 50%;
   }
-
-  .title-page__image {
-    width: auto;
-    background-size: cover;
-  }
-
-  .project {
-    padding: 90px 50px;
-  }
-
-  .project__title {
-    margin: 0 0 70px;
-  }
-
-  .project__tab {
-    margin: 0 0 93px;
-  }
-
-  .project__tab_column {
-    margin-right: 30px;
-  }
-
-  .project__tab_title {
-    margin-bottom: 22px;
-  }
-
-  .technology {
-    padding: 90px 50px 80px;
-  }
-
-  .technology__type {
-    background-color: #E8E8E8;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    width: 84px;
-    height: 57px;
-  }
-
-  .student {
-    padding: 90px 50px 70px;
-  }
+  
 
   .stident__info-title {
     font-size: 40px;
@@ -302,157 +79,61 @@
     margin-bottom: 16px;
   }
 
-  .student__info-subtitle {
+  .about__info-subtitle {
     font-size: 12px;
     line-height: 18px;
     margin-bottom: 20px;
   }
 
-  .student__info-history{
+  .about__info-history{
     font-size: 12px;
     line-height: 18px;
   }
 
-  .student__portfolio_link {
-    font-size: 28px;
+  .about__info-img {
+    max-width: 50%;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .title-page {
-    padding: 183px 0px 40px;
+  .about{
+    padding: 70px 14px;
   }
 
-  .project__title {
-    margin: 0 10px 60px;
-  }
-
-  .title-page__image {
-    width: 100vw;
-    height: 230px;
-  }
-
-  .project {
-    padding: 70px 18px;
-  }
-
-  .project__title {
-    margin-bottom: 60px;
-  }
-
-  .project__tab {
-    margin-bottom:  60px;
-    flex-direction: column;
-  }
-
-  .project__tab_column {
-    margin-right: 0;
-  }
-
-  .project__tab_column:first-child {
-    margin-bottom: 55px;
-  }
-
-  .project__tab_title {
-    font-size: 18px;
-    line-height: 22x;
-    margin-bottom: 16px;
-  }
-
-  .project__tab_paragraph {
-    font-size: 11px;
-    line-height: 16px;
-  }
-
-  .project__diagram {
-    grid-template-columns: 1fr 1.8fr;
-  }
-
-  .project__diagram_title {
-    font-size: 11px;
-    line-height: 13.31px;
-  }
-
-  .project__diagram_subtitle {
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 12.74px;
-  }
-
-  .technology {
-    background-color: #FAFAFA;
-    padding: 70px 17px;
-  }
-
-  .technology__title{
-    font-size: 30px;
-    line-height: 36px;
-    margin-bottom: 24px;
-  }
-  
-  .technology__subtitle {
-    font-size: 11px;
-    line-height: 16px;
-    margin: 0 auto 50px;
-    text-align: center;
-    max-width: 2900px;
-  }
-
-  .technology__collection {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 0 30px;
-  }
-
-  .student {
-    padding: 70px 14px 50px;
-  }
-
-  .student__colontitul {
+  .about__colontitul {
     font-size: 18px;
     line-height: 22px;
     padding-bottom: 28px;
     margin: 0 0 60px;
   }
 
-  .student__info {
+  .about__info {
     flex-direction: column-reverse;
-    margin-bottom: 70px;
   }
 
-  .student__info-container {
+  .about__info-container {
+    max-width: 100%;
     margin-top: 40px;
   }
 
-  .student__info-title {
+  .about__info-title {
     font-size: 30px;
     line-height: 36px;
     margin-bottom: 20px;
   }
 
-  .student__info-subtitle {
+  .about__info-subtitle {
     font-size: 11px;
     line-height: 16px;
     margin-bottom: 20px;
   }
 
-  .student__info-history{
+  .about__info-history{
     font-size: 11px;
     line-height: 16px;
     margin-bottom: 60px;
   }
-
-  .student__portfolio-title {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-
-  .student__portfolio_link {
-    font-size: 18px;
-    line-height: 28px;
-  }
-
-  .student__link_img {
-    width: 18px;
+  .about__info-img {
+    max-width: 100%;
   }
 }
