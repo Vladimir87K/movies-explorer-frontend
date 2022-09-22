@@ -1,0 +1,16 @@
+.movies {
+  padding: 0 70px;
+  background-color: #FAFAFA;
+}
+
+@media screen and (max-width: 868px) {
+  .movies {
+  padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .movies {
+    padding: 0 14px;
+    }  
+}

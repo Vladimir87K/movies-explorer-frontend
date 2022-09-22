@@ -1,6 +1,7 @@
 import './App.css';
 import Header from '../Header/Header';
-import Main from '../Main/Main'
+import Main from '../Main/Main';
+import Movies from '../Movies/Movies'
 import Footer from '../Footer/Footer';
 
 const App = () => {
@@ -8,7 +9,8 @@ const App = () => {
   return (
     <div className='page'>
       <Header />
-      <Main />
+      {/* <Main /> */}
+      <Movies />
       <Footer />
     </div>
   );
