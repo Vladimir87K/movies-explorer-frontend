@@ -1,108 +1,88 @@
-/* * {
-	border: 0;
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-} */
-/* :root {
-	--hue: 223;
-	--bg: hsl(var(--hue),10%,90%);
-	--fg: hsl(var(--hue),10%,10%);
-	font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
-} */
-/* body {
-	background-color: var(--bg);
-	color: var(--fg);
-	font: 1em/1.5 sans-serif;
-	height: 100vh;
-	display: grid;
-	place-items: center;
-	transition: background-color 0.3s;
-} */
-/* main {
-	padding: 1.5em 0;
-}*/
+@keyframes preloader-inside-white {
+    0% {
+        -webkit-transform: scale(0, 0);
+        -moz-transform: scale(0, 0);
+        -ms-transform: scale(0, 0);
+        -o-transform: scale(0, 0);
+        transform: scale(0, 0);
+    }
+    100% {
+        -webkit-transform: scale(1, 1);
+        -moz-transform: scale(1, 1);
+        -ms-transform: scale(1, 1);
+        -o-transform: scale(1, 1);
+        transform: scale(1, 1);
+    }
+}
+
+@keyframes preloader-inside-red {
+    0% {
+        -webkit-transform: scale(0, 0);
+        -moz-transform: scale(0, 0);
+        -ms-transform: scale(0, 0);
+        -o-transform: scale(0, 0);
+        transform: scale(0, 0);
+    }
+    30% {
+        -webkit-transform: scale(0, 0);
+        -moz-transform: scale(0, 0);
+        -ms-transform: scale(0, 0);
+        -o-transform: scale(0, 0);
+        transform: scale(0, 0);
+    }
+    100% {
+        -webkit-transform: scale(1, 1);
+        -moz-transform: scale(1, 1);
+        -ms-transform: scale(1, 1);
+        -o-transform: scale(1, 1);
+        transform: scale(1, 1);
+    }
+}
+
 .preloader {
-  padding: 0;
-  background-color: #FAFAFA;
-  display: grid;
-  transition: background-color 0.3s;
-  place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    padding: 20px;
 }
 
-.ap {
-  margin: auto;
-	width: 8em;
-	height: 16em;
-} 
-
-
-.ap__ring {
-	stroke: hsla(var(--hue),10%,10%,0.15);
-	transition: stroke 0.3s;
-}
-.ap__worm1,
-.ap__worm2 {
-	animation-duration: 3s;
-	animation-iteration-count: infinite;
-}
-.ap__worm1 {
-	animation-name: worm1;
-}
-.ap__worm2 {
-	animation-name: worm2;
-	visibility: hidden;
+.preloader__container {
+    width: 100px;
+    height: 100px;
+    position: relative;
 }
 
-/* Dark theme */
-@media (prefers-color-scheme: dark) {
-	:root {
-		--bg: hsl(var(--hue),10%,10%);
-		--fg: hsl(var(--hue),10%,90%);
-	}
-	.ap__ring {
-		stroke: hsla(var(--hue),10%,90%,0.1);
-	}
+.preloader__round {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #FF6838;
+    border-radius: 50px;
 }
 
-/* Animtions */
-@keyframes worm1 {
-	from {
-		animation-timing-function: ease-in-out;
-		stroke-dashoffset: -87.96;
-	}
-	20% {
-		animation-timing-function: ease-in;
-		stroke-dashoffset: 0;
-	}
-	60% {
-		stroke-dashoffset: -791.68;
-		visibility: visible;
-	}
-	60.1%,
-	to {
-		stroke-dashoffset: -791.68;
-		visibility: hidden;
-	}
+.preloader__round::after,
+.preloader__round::before {
+    content: '';
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50px;
 }
-@keyframes worm2 {
-	from,
-	60% {
-		stroke-dashoffset: -87.96;
-		visibility: hidden;
-	}
-	60.1% {
-		animation-timing-function: cubic-bezier(0,0,0.5,0.75);
-		stroke-dashoffset: -87.96;
-		visibility: visible;
-	}
-	77% {
-		animation-timing-function: cubic-bezier(0.5,0.25,0.5,0.88);
-		stroke-dashoffset: -340;
-		visibility: visible;
-	}
-	to {
-		stroke-dashoffset: -669.92;
-		visibility: visible;
-	}
+
+.preloader__round::after {
+    background: white;
+    animation: preloader-inside-white 1s ease-in-out infinite;
+}
+
+.preloader__round::before {
+    z-index: 10;
+    background: #FF6838;
+    animation: preloader-inside-red 1s ease-in-out infinite;
 }

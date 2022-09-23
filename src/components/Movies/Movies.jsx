@@ -7,9 +7,9 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 const Movies = () => {
   return (
     <div className="movies">
-      <SearchForm />
-      {/* <Preloader /> */}
-      <MoviesCardList />
+      {/* <SearchForm /> */}
+      <Preloader />
+      {/* <MoviesCardList /> */}
     </div>
   )
 }
