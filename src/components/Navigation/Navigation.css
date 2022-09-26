@@ -1,0 +1,143 @@
+.navigation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #fafafa;
+  min-width: 450px;
+  height: auto;
+}
+
+.navigation-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+.navigation__icon {
+  display: none;
+}
+
+.navigation__link {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration: none;
+  color: #000;
+  box-sizing: border-box;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+  margin-right: 20px;
+}
+
+.navigation__link:first-child {
+  display: none;
+}
+
+.navigation__link:hover {
+  color: #808080;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
+}
+
+.navigation__link-accaunt {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  margin-right: 70px;
+}
+
+.navigation__link-icon {
+  width: 30px;
+  height: 30px;
+  background: #F4F4F4;
+  background-image: url(../../images/icon-accaunt.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 6px;
+  margin-left: 13px;
+}
+
+.navigation__link-accaunt:hover {
+  cursor: pointer;
+  color: #808080;
+}
+
+
+@media screen and (max-width: 768px) {
+  .navigation {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .5);
+    opacity: .9;
+    visibility: visible;
+    z-index: 1;
+    transition: all .4s ease .1s;
+  }
+
+  .navigation-page {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 68%;
+    height: 100vh;
+    background: FAFAFA;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .navigation__icon {
+    display: block;
+    position: fixed;
+    top: 24px;
+    right: 24px;
+  }
+
+  .navigation__icon:hover {
+    cursor: pointer;
+    color: #808080;
+  }
+
+  .navigation__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navigation__link {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .navigation__link:first-child {
+    display: block;
+  }
+
+  .navigation__link-accaunt {
+    position: fixed;
+    bottom: 100px;
+    display: flex;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navigation {
+    width: 100%;
+  }
+
+  .navigation-page {
+    width: 100%;
+  }
+}

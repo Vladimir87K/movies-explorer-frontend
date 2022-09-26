@@ -6,6 +6,8 @@ import Footer from '../Footer/Footer';
 import Page404 from '../Page404/Page404';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import Navigation from '../Navigation/Navigation'
+import Profile from '../Profile/Profile';
 
 const App = () => {
  
@@ -14,9 +16,11 @@ const App = () => {
       <Header />
       {/* <Main /> */}
       {/* <Movies /> */}
-      <Footer />
+      <Profile />
+      {/* <Footer /> */}
       {/* <Register /> */}
-      <Login />
+      {/* <Login /> */}
+      {/* <Navigation /> */}
       {/* <Page404 /> */}
     </div>
   );

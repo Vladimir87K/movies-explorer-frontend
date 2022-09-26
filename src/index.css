@@ -5,8 +5,8 @@ body {
   font-family: Inter, sans-serif;
   font-style: normal;
   margin: 0 auto;
-  outline: 1px solid red;
   background: #fff;
+  background-color: #FAFAFA;
 }
 
 /* code {

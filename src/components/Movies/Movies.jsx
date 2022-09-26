@@ -8,8 +8,8 @@ const Movies = () => {
   return (
     <div className="movies">
       {/* <SearchForm /> */}
-      <Preloader />
-      {/* <MoviesCardList /> */}
+      {/* <Preloader /> */}
+      <MoviesCardList />
     </div>
   )
 }

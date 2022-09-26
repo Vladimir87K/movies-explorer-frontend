@@ -6,6 +6,8 @@
   box-sizing: border-box;
   padding: 80px 70px 20px;
   background-color: #F8F8F8;
+  position: fixed;
+  bottom: 0;
 }
 
 .footer__title {
