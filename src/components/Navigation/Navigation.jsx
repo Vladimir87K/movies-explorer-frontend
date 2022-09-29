@@ -1,18 +1,37 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Navigation.css';
 import icon from '../../images/icon-close.svg'
 
-const Navigation = () => {
+const Navigation = (props) => {
+  const navigate = useNavigate();
+
+  const handleMain = () => {
+    navigate('/')
+  }
+
+  const handleMovies = () => {
+    navigate('/movies')
+  }
+
+  const handleSavedMovies = () => {
+    navigate('/saved-movies')
+  }
+
+  const handleProfile = () => {
+    navigate('/profile')
+  }
+
   return (
-    <div className='navigation'>
-      <div className='navigation-page'>
-        <img src={icon} alt='крестик' className='navigation__icon'  />
+    <div className={`navigation ${props.loggedIn && 'navigation_opened'}`}>
+      <div className={`navigation-page ${props.isOpen && 'navigation-page_opened'}`}>
+        <img onClick={props.isClose} src={icon} alt='крестик' className={`navigation__icon ${props.isOpen && 'navigation__icon_opened'}`}  />
         <nav className='navigation__content'>
-          <a href='#' className='navigation__link'>Главная</a>
-          <a href='#' className='navigation__link'>Фильмы</a>
-          <a href='#' className='navigation__link'>Сохраненные фильмы</a>
+          <p onClick={handleMain} className='navigation__link'>Главная</p>
+          <p onClick={handleMovies} className='navigation__link'>Фильмы</p>
+          <p onClick={handleSavedMovies} className='navigation__link'>Сохраненные фильмы</p>
         </nav>
-        <a className='navigation__link-accaunt' href='#'>Аккаунт<p className='navigation__link-icon'></p></a>
+        <p onClick={handleProfile} className='navigation__link-accaunt'>Аккаунт<img className='navigation__link-icon'></img></p>
       </div>
 
     </div>
