@@ -91,10 +91,12 @@
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, .5);
-    opacity: .9;
-    visibility: visible;
     z-index: 1;
     transition: all .4s ease .1s;
+  }
+
+  .navigation_opened {
+    right: 0;
   }
 
   .navigation-page {
@@ -103,7 +105,7 @@
     right: -100vw;
     width: 68%;
     height: 100vh;
-    background: FAFAFA;
+    background: #fafafa;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -7,8 +7,9 @@
   background: rgba(250, 250, 250, 1);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content:flex-start;
   align-items: center;  
+  padding-top: 70px;
 }
 
 .popup__title {
@@ -77,8 +78,11 @@
   color: #FFFFFF;
   padding: 15px 0;
   border: none;
-  margin: 70px 0 16px;
   box-sizing: border-box;
+}
+
+.popup__form-save-register {
+  margin: 70px 0 16px;
 }
 
 .popup__form-save:hover {

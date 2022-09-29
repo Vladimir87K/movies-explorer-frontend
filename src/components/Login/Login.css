@@ -4,12 +4,13 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(250, 250, 250, 1);
+  background: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;  
   z-index: 1;
+  padding-top: 70px;
 }
 
 .popup__title {
@@ -75,11 +76,14 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: #FFFFFF;
+  color: #fff;
   padding: 15px 0;
   border: none;
-  margin: 180px 0 16px;
   box-sizing: border-box;
+}
+
+.popup__form-save-login {
+  margin: 180px 0 16px;
 }
 
 .popup__form-save:hover {

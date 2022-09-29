@@ -32,6 +32,25 @@ const App = () => {
   const closeNavigation = () => {
     setOpenNavigation(false)
   }
+  const handleMain = () => {
+    navigate('/');
+    closeNavigation();
+  }
+
+  const handleMovies = () => {
+    navigate('/movies')
+    closeNavigation();
+  }
+
+  const handleSavedMovies = () => {
+    navigate('/saved-movies');
+    closeNavigation();
+  }
+
+  const handleProfile = () => {
+    navigate('/profile');
+    closeNavigation();
+  }
 
   return (
     <div className='page'>
@@ -41,11 +60,15 @@ const App = () => {
         handleNavigation={handleNavigation} 
         isOpen={isOpenNavigation} 
         isClose={closeNavigation} 
-        loggedIn={loggedIn}  
+        loggedIn={loggedIn}
+        handleMain={handleMain}
+        handleMovies={handleMovies}
+        handleSavedMovies={handleSavedMovies}
+        handleProfile={handleProfile}
         />
       <Routes>
-        <Route path='/signup' element={<Register handleLogin={handleLogin} />} />
         <Route path='/signin' element={<Login handleRegister={handleRegister} />} />
+        <Route path='/signup' element={<Register handleLogin={handleLogin} />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/movies' element={<Movies />} />
         <Route path='/saved-movies' element={<SavedMovies />} />
