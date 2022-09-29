@@ -1,6 +1,6 @@
 import React from "react";
 import './AboutMe.css';
-import portret from '../../images/portret.svg';
+import portret from '../../images/portret.jpg';
 
 const AboutMe= () => {
   return (
@@ -15,7 +15,7 @@ const AboutMe= () => {
             Давно интересовался IT-технологиями, и обучение в Яндекс.Практикуме - мой первый серьезный 
             опыт по обучению в этой сфере
           </p>
-          <a href='#' className='about__info-link'>GitHub</a>
+          <a href='https://github.com/Vladimir87K' className='about__info-link'>GitHub</a>
         </div>
         <img className='about__info-img' src={portret} alt='изображение студента' />
       </div>

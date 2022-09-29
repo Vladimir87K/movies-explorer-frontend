@@ -7,6 +7,9 @@ const MoviesCardList = () => {
   return (
     <div className='movieCardList'>
       <div className='cardList'>
+        <MoviesCard />
+        <MoviesCard />
+        <MoviesCard />
         <div className='card'>
           <img className='card__image' src={screensaver} alt='постер фильма' />
           <div className='card__content'>

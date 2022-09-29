@@ -31,7 +31,7 @@ const Navigation = (props) => {
           <p onClick={handleMovies} className='navigation__link'>Фильмы</p>
           <p onClick={handleSavedMovies} className='navigation__link'>Сохраненные фильмы</p>
         </nav>
-        <p onClick={handleProfile} className='navigation__link-accaunt'>Аккаунт<img className='navigation__link-icon'></img></p>
+        <p onClick={handleProfile} className='navigation__link-accaunt'>Аккаунт<span className='navigation__link-icon'></span></p>
       </div>
 
     </div>

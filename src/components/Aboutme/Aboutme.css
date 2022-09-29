@@ -61,6 +61,7 @@
 
 .about__info-img {
   max-width: 270px;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 868px)  {

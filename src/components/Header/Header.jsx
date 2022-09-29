@@ -3,14 +3,20 @@ import React  from 'react';
 import './Header.css';
 import logo from '../../images/logo.svg';
 import Navigation from '../Navigation/Navigation';
+import { useNavigate } from 'react-router-dom';
 
 const Header = (props) => {
+  const navigate = useNavigate();
 
+  const handleMain = () => {
+    navigate('/');
+  }
+  
   return (
     <header className="header">
-      <a href='/' className='header__link'>
+      <p onClick={handleMain} className='header__link'>
         <img src={logo} alt='логотип' className='header__logo' />
-      </a>
+      </p>
         <nav className={`header__entrance ${!props.loggedIn && 'header__entrance_opened'}`}>
           <button onClick={props.handleRegister} className='header__entrance-btn'>Регистрация</button>
           <button onClick={props.handleLogin} className='header__entrance-btn'>Войти</button>
