@@ -8,7 +8,7 @@ import Portfolio from '../Portfolio/Portfolio';
 
 const Main = () => {
   return (
-    <div className='main'>
+    <div className='main-page'>
       <Promo />
       <AboutProject />
       <Tech />

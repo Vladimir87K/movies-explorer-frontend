@@ -31,11 +31,14 @@
   color: #A0A0A0;
   background-color: #FAFAFA;
   border: none;
+  border-bottom: 1px solid #FAFAFA;
+  box-sizing: border-box;
   padding: 0;
   outline: none;
 }
 
 .search-movie__input:focus {
+  border-bottom: 1px solid #3456F3;
   color: #000;
 }
 

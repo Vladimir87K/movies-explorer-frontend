@@ -7,7 +7,7 @@ import Navigation from '../Navigation/Navigation';
 const Header = (props) => {
   
   return (
-    <header className="header">
+    <header className='header' style={{backgroundColor: props.bacgroundHeader}}>
       <p onClick={props.handleMain} className='header__link'>
         <img src={logo} alt='логотип' className='header__logo' />
       </p>
@@ -15,7 +15,7 @@ const Header = (props) => {
           <button onClick={props.handleRegister} className='header__entrance-btn'>Регистрация</button>
           <button onClick={props.handleLogin} className='header__entrance-btn'>Войти</button>
         </nav>
-        <button onClick={props.handleNavigation} className={`header__burger ${!props.loggedIn && 'header__burger_close'}`}></button>
+        <button onClick={props.handleNavigation} style={{backgroundColor: props.bacgroundHeader}} className={`header__burger ${!props.loggedIn && 'header__burger_close'}`}></button>
         <Navigation 
           isOpen={props.isOpen} 
           isClose={props.isClose} 
@@ -24,6 +24,7 @@ const Header = (props) => {
           handleMovies={props.handleMovies}
           handleSavedMovies={props.handleSavedMovies}
           handleProfile={props.handleProfile}
+          bacgroundHeader={props.bacgroundHeader}
           />
     </header>
 

@@ -28,7 +28,7 @@ const Profile = () => {
         </div>
         <div className='profile__form-block-buttom'>
           <button className='profile__button profile__form-save' type='submit'>Редактировать</button>
-          <button className='profile__button profile__exit'>Выйти из аккаунта</button>
+          <button className='profile__button profile__exit' type='button'>Выйти из аккаунта</button>
         </div>
       </fieldset>
     </div>

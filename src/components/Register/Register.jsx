@@ -38,8 +38,10 @@ const Register = (props) => {
           <p className='popup__form-subtitle'>Пароль</p>
           <input onChange={handleChangePassword} className='popup__form-input popup__form-password' type='password' name='popup__form-password' id='popup__form-password' value={password} required />
           <span className='popup__form-error popup__form-password-error'>Что-то пошло не так</span>
-          <button className='popup__form-save popup__form-save-register' type='submit'>Зарегистрироваться</button>
-          <p className='popup__paragraph'>Уже зарегестрированны?<span className='popup__paragraph-link' onClick={props.handleLogin} >Войти</span></p>
+          <div className='popup__submit'>
+            <button className='popup__form-save' type='submit'>Зарегистрироваться</button>
+            <p className='popup__paragraph'>Уже зарегестрированны?<span className='popup__paragraph-link' onClick={props.handleLogin} >Войти</span></p>
+          </div>
         </fieldset>
       </div>
     </div>

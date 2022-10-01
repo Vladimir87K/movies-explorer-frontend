@@ -4,7 +4,7 @@ import portret from '../../images/portret.jpg';
 
 const AboutMe= () => {
   return (
-    <div className="about">
+    <section className="about">
       <p className='about__colontitul'>Студент</p>
       <div className='about__info'>
         <div className='about__info-container'>
@@ -15,11 +15,11 @@ const AboutMe= () => {
             Давно интересовался IT-технологиями, и обучение в Яндекс.Практикуме - мой первый серьезный 
             опыт по обучению в этой сфере
           </p>
-          <a href='https://github.com/Vladimir87K' className='about__info-link'>GitHub</a>
+          <a href='https://github.com/Vladimir87K' target='blank' className='about__info-link'>GitHub</a>
         </div>
         <img className='about__info-img' src={portret} alt='изображение студента' />
       </div>
-    </div>
+    </section>
   )
 }
 

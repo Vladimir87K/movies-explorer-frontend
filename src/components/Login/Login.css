@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #fff;
+  background: #fafafa;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -53,6 +53,10 @@
   box-sizing: border-box;
 }
 
+.popup__form-input:focus {
+  outline: 1px solid #3456F3;
+}
+
 .popup__form-error {
   font-weight: 400;
   font-size: 10px;
@@ -68,8 +72,13 @@
   opacity: 1;
 }
 
+.popup__submit {
+  position: fixed;
+  bottom: 30px
+}
+
 .popup__form-save {
-  width: 100%;
+  width: 396px;
   background: #3456F3;
   border-radius: 3px;
   font-weight: 500;
@@ -82,10 +91,6 @@
   box-sizing: border-box;
 }
 
-.popup__form-save-login {
-  margin: 180px 0 16px;
-}
-
 .popup__form-save:hover {
   cursor: pointer;
   color: #808080;
@@ -96,7 +101,7 @@
   font-size: 14px;
   line-height: 17px;
   color: #A0A0A0;
-  align-self: center;
+  text-align: center;
   margin: 0;
 }
 
@@ -111,13 +116,17 @@
 }
 
 @media screen and (max-width: 480px) {
+  .popup {
+    padding: 56px 0 30px;
+  }
+
   .popup__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
     height: 100vh;
-    padding: 55px 0 30px;
+    /* padding: 55px 0 30px; */
   }
 
   .popup__title {
@@ -129,7 +138,7 @@
   }
 
   .popup__form-save {
-    margin-top: 270px;
+    width: 256px;
   }
 
   .popup__paragraph {

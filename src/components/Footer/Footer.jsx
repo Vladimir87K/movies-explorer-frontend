@@ -8,8 +8,8 @@ const Footer = () => {
       <div className='footer__container'>
         <p className="footer__copyright">&copy; {new Date().getFullYear()}</p>
         <nav className='footer__navigate'>
-          <a href='https://practicum.yandex.ru/' className='footer__link'>Яндекс.Практикум</a>
-          <a href='https://pages.github.com/?(null)' className='footer__link'>GitHub</a>
+          <a href='https://practicum.yandex.ru/' target='blank' className='footer__link'>Яндекс.Практикум</a>
+          <a href='https://pages.github.com/?(null)' target='blank' className='footer__link'>GitHub</a>
         </nav>
       </div>
     </footer>
