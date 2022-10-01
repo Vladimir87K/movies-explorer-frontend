@@ -53,7 +53,6 @@ const App = () => {
 
   const handleProfile = () => {
     navigate('/profile');
-    setBackgroundHeader('#fafafa')
     closeNavigation();
   }
 
@@ -72,7 +71,7 @@ const App = () => {
         handleProfile={handleProfile}
         bacgroundHeader={bacgroundHeader}
         />
-        <div className='main'>
+        <main className='main'>
            <Routes>
             <Route path='/signin' element={<Login handleRegister={handleRegister} />} />
             <Route path='/signup' element={<Register handleLogin={handleLogin} />} />
@@ -82,7 +81,7 @@ const App = () => {
             <Route path='/' element={<Main />} />
             <Route path='*' element={<Page404 />} />
           </Routes>
-        </div>
+        </main>
       <Footer />
     </div>
   );
