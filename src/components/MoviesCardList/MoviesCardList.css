@@ -9,8 +9,6 @@
   grid-template-rows: auto;
   grid-column-gap: 20px;
   grid-row-gap: 32px;
-  /* justify-items: stretch;
-  align-items: stretch; */
 }
 
 .movieCardList__button {
