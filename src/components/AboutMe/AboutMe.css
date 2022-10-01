@@ -23,6 +23,7 @@
   flex-direction: column;
   justify-content: start;
   max-width: 60%;
+  margin-right: 50px;
 }
 
 .about__info-title {
@@ -114,7 +115,7 @@
 
   .about__info-container {
     max-width: 100%;
-    margin-top: 40px;
+    margin: 40px 0 0;
   }
 
   .about__info-title {

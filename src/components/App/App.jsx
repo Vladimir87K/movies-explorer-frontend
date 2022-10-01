@@ -72,7 +72,7 @@ const App = () => {
         bacgroundHeader={bacgroundHeader}
         />
         <main className='main'>
-           <Routes>
+          <Routes>
             <Route path='/signin' element={<Login handleRegister={handleRegister} />} />
             <Route path='/signup' element={<Register handleLogin={handleLogin} />} />
             <Route path='/profile' element={<Profile />} />
