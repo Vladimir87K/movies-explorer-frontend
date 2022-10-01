@@ -11,7 +11,7 @@ const MoviesCard = () => {
             <h2 className='card__title'>33 слова о дизайне</h2>
             <p className='card__time'>1ч33мин</p>
           </div>
-          <button className='card__icon card__icon_inactive'></button>
+          <button className='card__icon card__icon_inactive' type='button'></button>
         </div>
     </div>
   )

@@ -17,7 +17,7 @@ const MoviesCardList = () => {
               <h2 className='card__title'>33 слова о дизайне</h2>
               <p className='card__time'>1ч33мин</p>
             </div>
-            <button className='card__icon card__icon_inactive'></button>
+            <button className='card__icon card__icon_inactive' type='button'></button>
           </div>
         </div>
         <div className='card'>
@@ -27,7 +27,7 @@ const MoviesCardList = () => {
               <h2 className='card__title'>33 слова о дизайне</h2>
               <p className='card__time'>1ч33мин</p>
             </div>
-            <button className='card__icon card__icon_active'></button>
+            <button className='card__icon card__icon_active' type='button'></button>
           </div>
         </div>
         <div className='card'>
@@ -37,12 +37,12 @@ const MoviesCardList = () => {
               <h2 className='card__title'>33 слова о дизайне</h2>
               <p className='card__time'>1ч33мин</p>
             </div>
-            <button className='card__icon card__icon_delete'></button>
+            <button className='card__icon card__icon_delete' type='button'></button>
           </div>
         </div>
       </div>
       <div className='movieCardList__button'>
-        <button className='movieCardList__btn'>Ещё</button>
+        <button className='movieCardList__btn' type='button'>Ещё</button>
       </div>
     </div>
   )
