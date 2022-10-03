@@ -61,7 +61,7 @@
 }
 
 .about__info-img {
-  max-width: 270px;
+  max-width: 40%;
   object-fit: cover;
 }
 
@@ -93,7 +93,7 @@
   }
 
   .about__info-img {
-    max-width: 50%;
+    max-width: 40%;
   }
 }
 

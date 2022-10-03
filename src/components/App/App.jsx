@@ -31,29 +31,30 @@ const App = () => {
   }
 
   const closeNavigation = () => {
-    setOpenNavigation(false)
+    setOpenNavigation(false);
   }
   const handleMain = () => {
     navigate('/');
-    setBackgroundHeader('#dddee3')
+    setBackgroundHeader('#dddee3');
     closeNavigation();
   }
 
   const handleMovies = () => {
     navigate('/movies')
-    setBackgroundHeader('#fafafa')
+    setBackgroundHeader('#fafafa');
     closeNavigation();
   }
 
   const handleSavedMovies = () => {
     navigate('/saved-movies');
-    setBackgroundHeader('#fafafa')
+    setBackgroundHeader('#fafafa');
     closeNavigation();
   }
 
   const handleProfile = () => {
     navigate('/profile');
     closeNavigation();
+    setBackgroundHeader('#fafafa');
   }
 
   return (

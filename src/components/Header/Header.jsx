@@ -5,7 +5,6 @@ import logo from '../../images/logo.svg';
 import Navigation from '../Navigation/Navigation';
 
 const Header = (props) => {
-  
   return (
     <header className='header' style={{backgroundColor: props.bacgroundHeader}}>
       <p onClick={props.handleMain} className='header__link'>
