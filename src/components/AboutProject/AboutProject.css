@@ -1,0 +1,150 @@
+.project {
+  background-color: #FAFAFA;
+  padding: 110px 70px;
+}
+
+.project__title {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  border-bottom: 1px solid #000;
+  margin-bottom:  70px;
+  padding-bottom: 23px;
+}
+
+.project__tab {
+  display: flex;
+  margin-bottom:  110px;
+}
+
+.project__tab_column {
+  margin-right: 40px;
+}
+
+.project__tab_column:last-child {
+  margin-right: 0;
+}
+
+.project__tab_title {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0 0 25px;
+}
+
+.project__tab_paragraph {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.project__diagram {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 2;
+  grid-gap: 14px 0;
+  text-align: center;
+}
+
+.project__diagram_title {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.94px;
+  margin: 0;
+  padding: 11px 0;
+  text-align: center;
+  background-color: #F2F2F2;
+}
+
+.project__diagram_title:first-child {
+  color: #fff;
+  background-color: #3456F3;
+}
+
+.project__diagram_subtitle {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  margin: 0;
+  color: #A0A0A0;
+}
+
+@media screen and (max-width: 868px) {
+  .project {
+    padding: 90px 50px;
+  }
+
+  .project__title {
+    margin: 0 0 70px;
+  }
+
+  .project__tab {
+    margin: 0 0 93px;
+  }
+
+  .project__tab_column {
+    margin-right: 30px;
+  }
+
+  .project__tab_title {
+    margin-bottom: 22px;
+  }
+
+  .technology {
+    padding: 90px 50px 80px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .project__title {
+    margin: 0 10px 60px;
+  }
+
+  .project {
+    padding: 70px 18px;
+  }
+
+  .project__title {
+    margin-bottom: 60px;
+  }
+
+  .project__tab {
+    margin-bottom:  60px;
+    flex-direction: column;
+  }
+
+  .project__tab_column {
+    margin-right: 0;
+  }
+
+  .project__tab_column:first-child {
+    margin-bottom: 55px;
+  }
+
+  .project__tab_title {
+    font-size: 18px;
+    line-height: 22x;
+    margin-bottom: 16px;
+  }
+
+  .project__tab_paragraph {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .project__diagram {
+    grid-template-columns: 1fr 1.8fr;
+  }
+
+  .project__diagram_title {
+    font-size: 11px;
+    line-height: 13.31px;
+  }
+
+  .project__diagram_subtitle {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 12.74px;
+  }
+}

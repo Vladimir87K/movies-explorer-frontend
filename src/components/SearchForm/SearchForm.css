@@ -1,0 +1,132 @@
+.search {
+  background-color: #FAFAFA;
+  padding: 70px 0 50px;  
+}
+
+.search-movie {
+  display: flex;
+  justify-content: center;
+  border: none;
+  border-bottom: 1px solid #e8e8e8;
+  position: relative;
+  margin: 0;
+}
+
+.search-movie__image {
+  position: absolute;
+  left: 0;
+  top: 10%;
+  width: 34px;
+}
+
+.search-movie__image:hover {
+  cursor: pointer;
+}
+
+.search-movie__input {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  text-align: center;
+  color: #A0A0A0;
+  background-color: #FAFAFA;
+  border: none;
+  border-bottom: 1px solid #FAFAFA;
+  box-sizing: border-box;
+  padding: 0;
+  outline: none;
+}
+
+.search-movie__input:focus {
+  border-bottom: 1px solid #3456F3;
+  color: #000;
+}
+
+.search-movie__submit {
+  background: #3456F3;
+  border: none;
+  border-radius: 48px;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 18px;
+  color: #FFF;
+  padding: 8px 0;
+  width: 59px;
+  position: absolute;
+  right: 0;
+}
+
+.search-movie__submit:hover  {
+  cursor: pointer;
+  color: #808080;
+}
+
+.short-movie {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.short-movie_label {
+  display: flex;
+  justify-content: center;
+  user-select: none;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 29px auto 0;
+}
+
+.short-movie_label::before {
+  content: '';
+  display: inline-block;
+  margin: 0 12px;
+  width: 36px;
+  height: 20px;
+  background-image: url(../../images/check-inaction.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  visibility: visible;
+  transition: all .4s ease .1s;
+}
+
+.short-movie:checked+label::before {
+  background-image: url(../../images/check-action.svg);
+}
+
+.short-movie:not(:disabled):not(:checked)+label:hover::before {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 868px) {
+  .search {
+    padding: 86px 0 62px;  
+  }
+
+  .search-movie__input {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .search {
+    padding: 92px 0 50px;  
+  }
+
+  .search-movie {
+    justify-content: space-between;
+  }
+
+  .search-movie__image {
+    display: none;
+  }
+
+  .search-movie__input {
+    text-align: left;
+  }
+
+  .search-movie__submit {
+    position: relative;
+  }
+}

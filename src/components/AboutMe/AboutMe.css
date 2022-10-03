@@ -1,0 +1,141 @@
+.about {
+  background-color: #FAFAFA;
+  padding: 110px 70px 100px;
+}
+
+.about__colontitul {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 23px;
+  margin: 0 0 90px;
+}
+
+.about__info {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.about__info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  max-width: 60%;
+  margin-right: 50px;
+}
+
+.about__info-title {
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  margin: 0 0 18px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.about__info-subtitle {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0 0 26px;
+}
+
+.about__info-history{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0 0 25px;
+}
+
+.about__info-link {
+  text-decoration: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+}
+
+.about__info-img {
+  max-width: 40%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 868px)  {
+  .about {
+    padding: 90px 50px 90px;
+  }
+
+  .about__info-container {
+    max-width: 50%;
+  }
+  
+
+  .stident__info-title {
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 16px;
+  }
+
+  .about__info-subtitle {
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 20px;
+  }
+
+  .about__info-history{
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about__info-img {
+    max-width: 40%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about{
+    padding: 70px 14px;
+  }
+
+  .about__colontitul {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+    margin: 0 0 60px;
+  }
+
+  .about__info {
+    flex-direction: column-reverse;
+  }
+
+  .about__info-container {
+    max-width: 100%;
+    margin: 40px 0 0;
+  }
+
+  .about__info-title {
+    font-size: 30px;
+    line-height: 36px;
+    margin-bottom: 20px;
+  }
+
+  .about__info-subtitle {
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 20px;
+  }
+
+  .about__info-history{
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 60px;
+  }
+  .about__info-img {
+    max-width: 100%;
+  }
+}
