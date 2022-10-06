@@ -1,45 +1,27 @@
 import React from 'react';
+import { useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import screensaver from '../../images/screensaver.svg';
 
-const MoviesCardList = () => {
+const MoviesCardList = (props) => {
+  useEffect(() => {
+    console.log(props.searchMovies)
+  }, [props.searchMovies])
+  
   return (
-    <div className='movieCardList'>
+    <div className={`movieCardList ${!props.handleMoviesList && 'movieCardList_inactive'}`}>
       <div className='cardList'>
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <div className='card'>
-          <img className='card__image' src={screensaver} alt='постер фильма' />
-          <div className='card__content'>
-            <div className='card__info'>
-              <h2 className='card__title'>33 слова о дизайне</h2>
-              <p className='card__time'>1ч33мин</p>
-            </div>
-            <button className='card__icon card__icon_inactive' type='button'></button>
-          </div>
-        </div>
-        <div className='card'>
-          <img className='card__image' src={screensaver} alt='постер фильма' />
-          <div className='card__content'>
-            <div className='card__info'>
-              <h2 className='card__title'>33 слова о дизайне</h2>
-              <p className='card__time'>1ч33мин</p>
-            </div>
-            <button className='card__icon card__icon_active' type='button'></button>
-          </div>
-        </div>
-        <div className='card'>
-          <img className='card__image' src={screensaver} alt='постер фильма' />
-          <div className='card__content'>
-            <div className='card__info'>
-              <h2 className='card__title'>33 слова о дизайне</h2>
-              <p className='card__time'>1ч33мин</p>
-            </div>
-            <button className='card__icon card__icon_delete' type='button'></button>
-          </div>
-        </div>
+        {props.searchMovies.map((movie) => (
+          <MoviesCard 
+            key={movie.id}
+            movieImg={movie.image.url}
+            movieTitle={movie.nameRU} 
+            movieTime={movie.duration}
+            movieTrailer={movie.trailerLink}
+            handleLikeMovie={props.handleLikeMovie}
+          />
+        ))}
       </div>
       <div className='movieCardList__button'>
         <button className='movieCardList__btn' type='button'>Ещё</button>

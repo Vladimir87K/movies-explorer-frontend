@@ -11,12 +11,66 @@ import Page404 from '../Page404/Page404';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
+import moviesApi from '../../utils/MoviesApi';
+import mainApi from '../../utils/MainApi';
 
 const App = () => {
   const navigate = useNavigate();
-    const [isOpenNavigation, setOpenNavigation] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(true);
-    const [bacgroundHeader, setBackgroundHeader] = useState('##dddee3')
+  const [isOpenNavigation, setOpenNavigation] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [bacgroundHeader, setBackgroundHeader] = useState('##dddee3');
+  const [token, setToken] = useState('');
+  const [dataMovies, setDataMovies] = useState([]);           //массив полученных фильмов
+  const [searchMovies, setSearchMovies] = useState([]);       //массив найденных фильмов
+  const [defaultSearch, setDefaultSearch] = useState(false);  //если фильм не найден - вывести зпголовок
+  // const [handleRowMovies, setHandleRowMovies] = useState([])
+  const [handleMoviesList, setHandleMoviesList] = useState(false)
+  // const [isLike, setIsLike] = useState(false);
+
+
+//   useEffect(() => {
+//     const jwt = localStorage.getItem("JWT");
+//     if (jwt) {
+//         auth.getControl(jwt)
+//             .then((res) => {
+//                 setEmail(res.data.email);
+//                 setUser(true);
+//                 setLoggedIn(true);
+//                 setCurrentUser(res.data);
+//                 setToken(jwt);
+//                 navigate("/main");
+//             }).catch((err) => console.log(err))
+//     } else {
+//         navigate("/sign-up");
+//     }
+// }, [loggedIn]);
+
+//   useEffect(() => {
+//     if (token) { 
+//       mainApi.getInitialProfil(token).then((data) => {
+//        setCurrentUser(data);
+//        })
+//        .catch((err) => console.log(err));
+
+//       mainApi.getInitialMovieList(token).then((data) => {
+//        setCards(data);
+//        })
+//        .catch(err => console.log(err));
+//     }
+// }, [token]);
+
+  const countMoviesInRow = () => {
+    let widthBlock = document.querySelector('.cardList').clientWidth;     // поиск ширины блока
+    let widthCard = document.querySelector('.card').clientWidth;          // поиск ширины карточки
+    return Math.floor(widthBlock / widthCard);            // расчет количества карточек в ряд
+  }
+
+  useEffect(() => {
+    moviesApi.then((data) => {
+      setDataMovies([data])
+    })
+    .catch(err => alert(err))
+  }, [loggedIn])
 
   const handleRegister = () => {
     navigate('/signup')
@@ -57,6 +111,37 @@ const App = () => {
     setBackgroundHeader('#fafafa');
   }
 
+  const handleSearchMovie = async (name) => {
+    console.log('Click1')
+    let nameMovie = name.trim().toLowerCase();
+    // console.log(nameMovie);
+    setSearchMovies([]);
+    dataMovies.map((movies) => {
+      movies.map((movie) => {
+        let nameRU = movie.nameRU.toLowerCase();
+        let nameEN = movie.nameEN.toLowerCase();
+        console.log(nameEN, nameRU)
+        if (nameRU.includes(nameMovie) || nameEN.includes(nameMovie)) {
+          setHandleMoviesList(true)
+          setDefaultSearch(false)
+          // eslint-disable-next-line no-unused-expressions
+          setSearchMovies[(prev) => [movie, ...prev]];
+          console.log(movie, 'click!')
+        } 
+      })
+    })
+  }
+
+  // const rowMovies = (data) => {
+  //   for (let i = 0; i < countMoviesInRow(); i++) {
+  //     setHandleRowMovies((prev) => [data[i], ...prev])
+  //   }
+  // }
+
+  const handleLikeMovie = () => {
+    
+  }
+
   return (
     <div className='page'>
       <Header 
@@ -77,7 +162,13 @@ const App = () => {
             <Route path='/signin' element={<Login handleRegister={handleRegister} />} />
             <Route path='/signup' element={<Register handleLogin={handleLogin} />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/movies' element={<Movies />} />
+            <Route path='/movies' element={<Movies 
+              searchMovies={searchMovies} 
+              handleLikeMovie={handleLikeMovie} 
+              handleSearchMovie={handleSearchMovie}
+              defaultSearch={defaultSearch}
+              handleMoviesList={handleMoviesList}
+              />} />
             <Route path='/saved-movies' element={<SavedMovies />} />
             <Route path='/' element={<Main />} />
             <Route path='*' element={<Page404 />} />

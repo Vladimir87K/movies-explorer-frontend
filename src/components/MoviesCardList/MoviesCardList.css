@@ -2,6 +2,10 @@
   
 }
 
+.movieCardList_inactive {
+  display: none;
+}
+
 .cardList {
   padding-top: 70px;
   display: grid;
