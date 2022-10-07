@@ -32,6 +32,10 @@
   box-sizing: border-box;
 }
 
+.popup__form {
+  width: 100%;
+}
+
 .popup__form-subtitle {
   font-weight: 400;
   font-size: 10px;
@@ -89,6 +93,10 @@
   padding: 15px 0;
   border: none;
   box-sizing: border-box;
+}
+
+.popup__form-save_disabled {
+  background-color: #808080;
 }
 
 .popup__form-save:hover {

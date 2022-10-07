@@ -54,13 +54,32 @@ class MainApi {
           .then((res) => res.data)
   }
   
-  getInitialProfil(token) {
+  getRegistrationProfil(data) {
     return fetch(`${this._urlBase}/users/me`, {
             method: 'GET',
             headers: {
-              "Authorization" : `Bearer ${token}`,
               'Content-Type': 'application/json'
-              }
+            },
+            body: JSON.stringify({
+              name: data.name,
+              email: data.email,
+              password: data.password
+            })
+        })
+        .then(this._checkError)
+        .then((res) => res.data)
+  }
+
+  getAutorizationProfil(data) {
+    return fetch(`${this._urlBase}/users/me`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: data.email,
+              password: data.password
+            })
         })
         .then(this._checkError)
         .then((res) => res.data)

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -16,6 +17,7 @@ import mainApi from '../../utils/MainApi';
 
 const App = () => {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState({});
   const [isOpenNavigation, setOpenNavigation] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
   const [bacgroundHeader, setBackgroundHeader] = useState('##dddee3');
@@ -58,6 +60,22 @@ const App = () => {
 //        .catch(err => console.log(err));
 //     }
 // }, [token]);
+
+  const registration = (data) => {
+    mainApi.getRegistrationProfil(data)
+      .then((data) => {
+        autorization(data);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const autorization = (data) => {
+    mainApi.getAutorizationProfil(data)
+      .then((data) => {
+
+      })
+      .catch((err) => console.log(err))
+  }
 
   const countMoviesInRow = () => {
     let widthBlock = document.querySelector('.cardList').clientWidth;     // поиск ширины блока
@@ -144,37 +162,42 @@ const App = () => {
 
   return (
     <div className='page'>
-      <Header 
-        handleLogin={handleLogin} 
-        handleRegister={handleRegister} 
-        handleNavigation={handleNavigation} 
-        isOpen={isOpenNavigation} 
-        isClose={closeNavigation} 
-        loggedIn={loggedIn}
-        handleMain={handleMain}
-        handleMovies={handleMovies}
-        handleSavedMovies={handleSavedMovies}
-        handleProfile={handleProfile}
-        bacgroundHeader={bacgroundHeader}
-        />
-        <main className='main'>
-          <Routes>
-            <Route path='/signin' element={<Login handleRegister={handleRegister} />} />
-            <Route path='/signup' element={<Register handleLogin={handleLogin} />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/movies' element={<Movies 
-              searchMovies={searchMovies} 
-              handleLikeMovie={handleLikeMovie} 
-              handleSearchMovie={handleSearchMovie}
-              defaultSearch={defaultSearch}
-              handleMoviesList={handleMoviesList}
-              />} />
-            <Route path='/saved-movies' element={<SavedMovies />} />
-            <Route path='/' element={<Main />} />
-            <Route path='*' element={<Page404 />} />
-          </Routes>
-        </main>
-      <Footer />
+      <CurrentUserContext.Provider value={currentUser} >
+        <Header 
+          handleLogin={handleLogin} 
+          handleRegister={handleRegister} 
+          handleNavigation={handleNavigation} 
+          isOpen={isOpenNavigation} 
+          isClose={closeNavigation} 
+          loggedIn={loggedIn}
+          handleMain={handleMain}
+          handleMovies={handleMovies}
+          handleSavedMovies={handleSavedMovies}
+          handleProfile={handleProfile}
+          bacgroundHeader={bacgroundHeader}
+          />
+          <main className='main'>
+            <Routes>
+              <Route path='/signin' element={<Login handleRegister={handleRegister} />} />
+              <Route path='/signup' element={<Register 
+                handleLogin={handleLogin} 
+                onSubmit={registration}
+                />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/movies' element={<Movies 
+                searchMovies={searchMovies} 
+                handleLikeMovie={handleLikeMovie} 
+                handleSearchMovie={handleSearchMovie}
+                defaultSearch={defaultSearch}
+                handleMoviesList={handleMoviesList}
+                />} />
+              <Route path='/saved-movies' element={<SavedMovies />} />
+              <Route path='/' element={<Main />} />
+              <Route path='*' element={<Page404 />} />
+            </Routes>
+          </main>
+        <Footer />
+      </CurrentUserContext.Provider>
     </div>
   );
 }
