@@ -12,6 +12,10 @@
   margin: 0;
 }
 
+.search-movie__form {
+  width: 100%;
+} 
+
 .search-movie__image {
   position: absolute;
   left: 0;

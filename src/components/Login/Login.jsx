@@ -31,13 +31,14 @@ const Login = (props) => {
   
   const onSubmit = (e) => {
     e.preventDefault();
-    props.handleSubmit({
+    props.onSubmit({
       email,
       password
     });
     setEmail('');
     setPassword('');
-    setValidate(false)
+    setValidate(false);
+    console.log('запрос пошел')
   }
 
   return (
@@ -56,7 +57,7 @@ const Login = (props) => {
             <input onChange={handleChangePassword} className='popup__form-input popup__form-password' type='password' name='popup__form-password' id='popup__form-password' value={password} required />
             <span className='popup__form-error popup__form-password-error'>Что-то пошло не так</span>
             <div className='popup__submit'>
-              <button className={`popup__form-save ${!validate && 'popup__form-save_disabled'}`} type='submit' disabled>Войти</button>
+              <button className={`popup__form-save ${!validate && 'popup__form-save_disabled'}`} type='submit'>Войти</button>
               <p className='popup__paragraph'>Еще не зарегистрированы?<span className='popup__paragraph-link' onClick={props.handleRegister}>Регистрация</span></p>
             </div>
           </form>

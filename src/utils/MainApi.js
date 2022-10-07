@@ -55,8 +55,8 @@ class MainApi {
   }
   
   getRegistrationProfil(data) {
-    return fetch(`${this._urlBase}/users/me`, {
-            method: 'GET',
+    return fetch(`${this._urlBase}/signup`, {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -71,8 +71,9 @@ class MainApi {
   }
 
   getAutorizationProfil(data) {
-    return fetch(`${this._urlBase}/users/me`, {
-            method: 'GET',
+    console.log(data)
+    return fetch(`${this._urlBase}/signin`, {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -82,7 +83,6 @@ class MainApi {
             })
         })
         .then(this._checkError)
-        .then((res) => res.data)
   }
 
   correctUserInfo(data, token) {
@@ -104,7 +104,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    urlBase: 'http://localhost:3000',
+    urlBase: 'http://localhost:3001',
     headers: {
         'Content-Type': 'application/json'
     }

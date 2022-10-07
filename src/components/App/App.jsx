@@ -18,6 +18,7 @@ import mainApi from '../../utils/MainApi';
 const App = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
+  const [password, setPassword] = useState('')
   const [isOpenNavigation, setOpenNavigation] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
   const [bacgroundHeader, setBackgroundHeader] = useState('##dddee3');
@@ -26,7 +27,7 @@ const App = () => {
   const [searchMovies, setSearchMovies] = useState([]);       //массив найденных фильмов
   const [defaultSearch, setDefaultSearch] = useState(false);  //если фильм не найден - вывести зпголовок
   // const [handleRowMovies, setHandleRowMovies] = useState([])
-  const [handleMoviesList, setHandleMoviesList] = useState(false)
+  const [handleMoviesList, setHandleMoviesList] = useState(false);
   // const [isLike, setIsLike] = useState(false);
 
 
@@ -62,19 +63,29 @@ const App = () => {
 // }, [token]);
 
   const registration = (data) => {
+    setPassword(data.password);
     mainApi.getRegistrationProfil(data)
-      .then((data) => {
+      .then((res) => {
+        console.log('ответ пришел', res)
         autorization(data);
       })
       .catch((err) => console.log(err));
   }
 
   const autorization = (data) => {
-    mainApi.getAutorizationProfil(data)
-      .then((data) => {
-
+    let parole = data.password ? data.password : password;
+    console.log(parole);
+    mainApi.getAutorizationProfil({email: data.email, password: parole})
+      .then((res) => {
+        if (res.token) {
+          setLoggedIn(true);
+          localStorage.setItem('JWT', res.token);
+          navigate('/movies');
+        } else {
+          alert('Что-то пошло не так, попробуйте что-нибудь изменить');
+        }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => alert(err))
   }
 
   const countMoviesInRow = () => {
@@ -129,7 +140,7 @@ const App = () => {
     setBackgroundHeader('#fafafa');
   }
 
-  const handleSearchMovie = async (name) => {
+  const handleSearchMovie = (name) => {
     console.log('Click1')
     let nameMovie = name.trim().toLowerCase();
     // console.log(nameMovie);
@@ -178,7 +189,10 @@ const App = () => {
           />
           <main className='main'>
             <Routes>
-              <Route path='/signin' element={<Login handleRegister={handleRegister} />} />
+              <Route path='/signin' element={<Login 
+                handleRegister={handleRegister} 
+                onSubmit={autorization}
+                />} />
               <Route path='/signup' element={<Register 
                 handleLogin={handleLogin} 
                 onSubmit={registration}
