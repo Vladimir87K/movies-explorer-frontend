@@ -1,6 +1,18 @@
 .movies {
   padding: 0 70px;
   background-color: #FAFAFA;
+  height: 100%;
+}
+
+.movies__message {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  
+}
+
+.movies__message_inaction {
+  display: none;
 }
 
 @media screen and (max-width: 868px) {

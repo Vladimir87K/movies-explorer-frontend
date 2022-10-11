@@ -5,10 +5,10 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import screensaver from '../../images/screensaver.svg';
 
 const MoviesCardList = (props) => {
-  useEffect(() => {
-    console.log(props.searchMovies)
-  }, [props.searchMovies])
-  
+  // useEffect(() => {
+  //   console.log(props.searchMovies)
+  // }, [props.handleMoviesList])
+
   return (
     <div className={`movieCardList ${!props.handleMoviesList && 'movieCardList_inactive'}`}>
       <div className='cardList'>
@@ -20,6 +20,7 @@ const MoviesCardList = (props) => {
             movieTime={movie.duration}
             movieTrailer={movie.trailerLink}
             handleLikeMovie={props.handleLikeMovie}
+            checkbox={props.checkbox}
           />
         ))}
       </div>

@@ -54,7 +54,7 @@ class MainApi {
           .then((res) => res.data)
   }
   
-  getRegistrationProfil(data) {
+  registrationProfil(data) {
     return fetch(`${this._urlBase}/signup`, {
             method: 'POST',
             headers: {
@@ -70,7 +70,7 @@ class MainApi {
         .then((res) => res.data)
   }
 
-  getAutorizationProfil(data) {
+  autorizationProfil(data) {
     console.log(data)
     return fetch(`${this._urlBase}/signin`, {
             method: 'POST',
@@ -85,21 +85,31 @@ class MainApi {
         .then(this._checkError)
   }
 
-  correctUserInfo(data, token) {
-    console.log(data, token);
+  correctProfil(data, token) {
+    console.log(data.email, token);
       return fetch(`${this._urlBase}/users/me`, {
               method: 'PATCH',
               headers: {
-                "Authorization" : `Bearer ${token}`,
+                'Authorization' : `Bearer ${token}`,
                 'Content-Type': 'application/json'
                 },
               body: JSON.stringify({
                   name: data.name,
-                  about: data.about
+                  email: data.email
               })
           })
           .then(this._checkError)
-          .then((res) => res.data)
+  }
+
+  getUserProfil(token) {
+    return fetch(`${this._urlBase}/users/me`, {
+            method: 'GET',
+            headers: {
+              'Authorization' : `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+        })
+        .then(this._checkError)
   }
 }
 

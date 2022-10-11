@@ -5,8 +5,12 @@ import screensaver from '../../images/screensaver.svg';
 
 const MoviesCard = (props) => {
   const [isLike, setIsLike] = useState(false);
-
   const movieImage = props.movieImg ? ('https://api.nomoreparties.co/' + props.movieImg) : screensaver;
+  let longMovie = false;
+
+  if (props.movieTime < 40) {
+    longMovie = true;
+  }
 
   const handleTrailer = () => {
     window.open(props.movieTrailer, "_blank")
@@ -18,7 +22,7 @@ const MoviesCard = (props) => {
   }
 
   return (
-    <div className="card">
+    <div className={`card ${!longMovie && props.checkbox && 'card_inaction'}`}>
       <img onClick={handleTrailer} className='card__image' src={movieImage} alt='постер фильма' />
         <div className='card__content'>
           <div className='card__info'>

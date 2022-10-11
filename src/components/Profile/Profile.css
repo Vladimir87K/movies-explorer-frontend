@@ -82,6 +82,15 @@
   color: red;
 }
 
+.profile__form-save_disabled {
+  color: #808080
+}
+
+.profile__form-save_disabled:hover {
+  cursor: auto;
+  opacity: 1;
+}
+
 @media screen and (max-width: 480px) {
   .profile__title {
     margin: 70px 0 80px;
