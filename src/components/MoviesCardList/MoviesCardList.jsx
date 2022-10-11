@@ -5,9 +5,40 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import screensaver from '../../images/screensaver.svg';
 
 const MoviesCardList = (props) => {
-  // useEffect(() => {
-  //   console.log(props.searchMovies)
-  // }, [props.handleMoviesList])
+  const btn = document.querySelector('.movieCardList__button');
+
+  // const countMoviesInRow = () => {
+  //   let widthBlock = document.querySelector('.cardList').clientWidth;     // поиск ширины блока
+  //   let widthCard = document.querySelector('.card').clientWidth;          // поиск ширины карточки
+  //   return Math.floor(widthBlock / widthCard);            // расчет количества карточек в ряд
+  // }
+
+  // let moviesInRow = countMoviesInRow();
+
+  useEffect(() => {
+    let array = Array.from(document.querySelectorAll('.card'));
+    let item = 0;
+
+    if (showAddMovies.length !== 0) {array.forEach((e) => {    // включение - выключение кнопки "еще"
+      if (!e.classList.contains('card_inaction')) {
+        item++;
+      }
+      })
+      if (item <= props.searchMovies.length) {
+        btn.style.display = 'none';
+      } else {
+        btn.style.display = 'flex'
+      }
+    }
+  }, [props.searchMovies, props.checkbox])
+
+  
+
+  const showAddMovies = () => {
+    // if (x) {
+
+    // }
+  }
 
   return (
     <div className={`movieCardList ${!props.handleMoviesList && 'movieCardList_inactive'}`}>
@@ -25,7 +56,7 @@ const MoviesCardList = (props) => {
         ))}
       </div>
       <div className='movieCardList__button'>
-        <button className='movieCardList__btn' type='button'>Ещё</button>
+        <button onClick={showAddMovies} className='movieCardList__btn' type='button'>Ещё</button>
       </div>
     </div>
   )

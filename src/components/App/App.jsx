@@ -121,11 +121,7 @@ const App = () => {
       .catch((err) => alert('изменение профиля: ошибочка', err));
   }
 
-  const countMoviesInRow = () => {
-    let widthBlock = document.querySelector('.cardList').clientWidth;     // поиск ширины блока
-    let widthCard = document.querySelector('.card').clientWidth;          // поиск ширины карточки
-    return Math.floor(widthBlock / widthCard);            // расчет количества карточек в ряд
-  }
+  
 
   useEffect(() => {
     setLoading(true);
@@ -184,6 +180,8 @@ const App = () => {
     setBackgroundHeader('#fafafa');
   }
 
+
+
   const handleSearchMovie = (name) => {
     let nameMovie = name.trim().toLowerCase();
     setSearchMovies([]);
@@ -197,7 +195,6 @@ const App = () => {
           return [movie, ...prev]
         });
         setHandleMoviesList(true);
-        console.log(movie, 'Click!');
       } 
     })
   }
