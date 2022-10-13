@@ -28,10 +28,9 @@ const App = () => {
   const [error, setError] = useState(false);                  //факт ошибки
   const [textError, setTextError] = useState('');             //текст ошибки
   const [dataMovies, setDataMovies] = useState([]);           //массив полученных фильмов
-  //const [saveMovies, setSaveMovies] = useState([]);           //массив сохраненных в профиле фильмов
+  const [saveMovies, setSaveMovies] = useState([]);           //массив сохраненных в профиле фильмов
   const [searchMovies, setSearchMovies] = useState([]);       //массив найденных фильмов
   const [viemMovies, setViemMovies] = useState([])
- // const [viemMovies, setViemMosies] = useState([]);
   const [defaultSearch, setDefaultSearch] = useState(false);  //если фильм не найден - вывести зпголовок
   // const [handleRowMovies, setHandleRowMovies] = useState([])
   const [handleMoviesList, setHandleMoviesList] = useState(false);
@@ -99,13 +98,13 @@ const App = () => {
           handleMovies();
           initialProfil(res.token);
 
-          // mainApi.getInitialMovieList()
-          //   .then((res) => {
-          //     setSaveMovies([res]);
-          //   })
-          //   .catch((err) => {
-          //     alert('заргузка сохраненных фильмов: ошибка', err);
-          //   })
+          mainApi.getInitialMovieList(res.token)
+            .then((res) => {
+              setSaveMovies(res);
+            })
+            .catch((err) => {
+              alert('загрузка сохраненных фильмов: ошибка', err);
+            })
         } else {
           alert('Что-то пошло не так, попробуйте что-нибудь изменить');
         }
@@ -183,6 +182,9 @@ const App = () => {
 
 
   const handleSearchMovie = (name) => {
+    let width = window.innerWidth;
+    
+    // if (width >= )
     let nameMovie = name.trim().toLowerCase();
     setSearchMovies([]);
     dataMovies.map((movie) => {
@@ -199,14 +201,30 @@ const App = () => {
     })
   }
 
-  // const rowMovies = (data) => {
-  //   for (let i = 0; i < countMoviesInRow(); i++) {
-  //     setHandleRowMovies((prev) => [data[i], ...prev])
-  //   }
-  // }
+  const addNewMovie = (movie) => {
+    mainApi.addNewMovies(movie, token)
+        .then((res) => {
+          setSaveMovies((prev) => [...prev, res])
+        })
+        .catch((err) => {console.log(err)})
+  }
 
-  const handleLikeMovie = () => {
-    setCheckbox(true)
+  const deleteMovie = (id) => {
+    let idDeleteMovie = saveMovies.filter((item) => item.movieId === id)[0]._id;
+    console.log(idDeleteMovie)
+    mainApi.deleteMovies(idDeleteMovie, token)
+      .then(() => {
+        setSaveMovies((saveMovies) => saveMovies.filter((item) => item.movieId !== idDeleteMovie))
+      })
+      .catch((err) => {console.log(err)})
+  }
+
+  const handleLikeMovie = (e) => {
+    if (!e.isLike) {
+      addNewMovie(e.e)
+    } else {
+      deleteMovie(e.e.id);
+    }
   }
 
   const hahdleOutAccount = () => {
@@ -260,7 +278,7 @@ const App = () => {
                     error={error}
                     searchMovies={searchMovies} 
                     dataMovies={dataMovies}
-                    // saveMovies={saveMovies}
+                    saveMovies={saveMovies}
                     handleLikeMovie={handleLikeMovie} 
                     handleSearchMovie={handleSearchMovie}
                     defaultSearch={defaultSearch}
@@ -273,7 +291,7 @@ const App = () => {
                 } />
                 <Route path='/saved-movies' element={<ProtectedRoute loggedIn={loggedIn} >
                   <SavedMovies
-                    // saveMovies={saveMovies}
+                    saveMovies={saveMovies}
                    />
                   </ProtectedRoute>
                 } />

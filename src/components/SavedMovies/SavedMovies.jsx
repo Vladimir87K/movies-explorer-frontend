@@ -3,11 +3,13 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-const SavedMovies = () => {
+const SavedMovies = (props) => {
   return (
     <div className='savedMovies'>
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList 
+        savedMovies={props.savedMovies}
+      />
     </div>
   )
 }

@@ -4,7 +4,7 @@ import './MoviesCard.css'
 import screensaver from '../../images/screensaver.svg';
 
 const MoviesCard = (props) => {
-  const [isLike, setIsLike] = useState(false);
+  const [isLike, setIsLike] = useState(props.isLike);
   const movieImage = props.movieImg ? ('https://api.nomoreparties.co/' + props.movieImg) : screensaver;
   let longMovie = false;
 
@@ -16,9 +16,9 @@ const MoviesCard = (props) => {
     window.open(props.movieTrailer, "_blank")
   }
 
-  const likeMovie = () => {
+  const likeMovie = (e) => {
     setIsLike(!isLike);
-    props.handleLikeMovie();
+    props.handleLikeMovie({e, isLike: isLike});
   }
 
   return (

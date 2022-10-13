@@ -1,49 +1,56 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import screensaver from '../../images/screensaver.svg';
 
 const MoviesCardList = (props) => {
+  const [viemMovies, setViemMovies] = useState(0);
   const btn = document.querySelector('.movieCardList__button');
 
-  // const countMoviesInRow = () => {
-  //   let widthBlock = document.querySelector('.cardList').clientWidth;     // поиск ширины блока
-  //   let widthCard = document.querySelector('.card').clientWidth;          // поиск ширины карточки
-  //   return Math.floor(widthBlock / widthCard);            // расчет количества карточек в ряд
-  // }
-
-  // let moviesInRow = countMoviesInRow();
+  const viemBtn = () => {
+    if (props.searchMovies.length <= viemMovies || countMoviesInRow() === Infinity) {
+      btn.style.display = 'none';
+    } else {
+      btn.style.display = 'flex';
+    }
+  }
 
   useEffect(() => {
-    let array = Array.from(document.querySelectorAll('.card'));
-    let item = 0;
-
-    if (showAddMovies.length !== 0) {array.forEach((e) => {    // включение - выключение кнопки "еще"
-      if (!e.classList.contains('card_inaction')) {
-        item++;
-      }
-      })
-      if (item <= props.searchMovies.length) {
-        btn.style.display = 'none';
-      } else {
-        btn.style.display = 'flex'
-      }
+    let width = window.innerWidth;
+    if (width > 868) {
+      setViemMovies(15);
+    } else if (width > 480) {
+      setViemMovies(8)
+    } else {
+      setViemMovies(5)
     }
-  }, [props.searchMovies, props.checkbox])
+    if (props.searchMovies.length !== 0) {
+   
+    }
+  }, [props.handleMoviesList]);
 
-  
+  const countMoviesInRow = () => {
+    let widthBlock = document.querySelector('.cardList').clientWidth;     // поиск ширины блока
+    let widthCard = document.querySelector('.card').clientWidth;          // поиск ширины карточки
+    return Math.floor(widthBlock / widthCard);            // расчет количества карточек в ряд
+  }
 
   const showAddMovies = () => {
-    // if (x) {
-
-    // }
+    let row = countMoviesInRow();
+    if (row === 3) {
+      setViemMovies(viemMovies + 3);
+    } else if (row < 3) {
+      setViemMovies(viemMovies + 2);
+    }
+    viemBtn();
   }
+
 
   return (
     <div className={`movieCardList ${!props.handleMoviesList && 'movieCardList_inactive'}`}>
       <div className='cardList'>
-        {props.searchMovies.map((movie) => (
+        {props.searchMovies.slice(0, viemMovies).map((movie) => (
           <MoviesCard 
             key={movie.id}
             movieImg={movie.image.url}
@@ -52,6 +59,9 @@ const MoviesCardList = (props) => {
             movieTrailer={movie.trailerLink}
             handleLikeMovie={props.handleLikeMovie}
             checkbox={props.checkbox}
+            movie={movie}
+            saveMovies={props.saveMovies}
+            isLike={props.saveMovies.some((item) => item.movieId === movie.id ? true : false)}
           />
         ))}
       </div>

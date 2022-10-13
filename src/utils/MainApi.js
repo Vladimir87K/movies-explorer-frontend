@@ -14,7 +14,7 @@ class MainApi {
     }
 
   getInitialMovieList(token) {
-      return fetch(`${this._urlBase}/cards`, {
+      return fetch(`${this._urlBase}/movies`, {
               method: 'GET',
               headers: {
                 "Authorization" : `Bearer ${token}`,
@@ -26,16 +26,24 @@ class MainApi {
   }
 
   addNewMovies(data, token) {
-    console.log(data, token, 'клик!')
-      return fetch(`${this._urlBase}/cards`, {
+      return fetch(`${this._urlBase}/movies`, {
               method: 'POST',
               headers: {
                 "Authorization" : `Bearer ${token}`,
                 'Content-Type': 'application/json'
                 },
               body: JSON.stringify({
-                  name: data.name,
-                  link: data.link
+                country: data.country || 'country',
+                director: data.director || 'director',
+                duration: data.duration || 2020,
+                year: data.year || 'year',
+                description: data.description || 'description',
+                image: data.image.url ? `https://api.nomoreparties.co${data.image.url}` : 'image',
+                trailerLink: data.trailerLink || 'https://youtube.com',
+                thumbnail: data.thumbnail ? `https://api.nomoreparties.co/${data.thumbnail}` : 'https://youtube.com',
+                movieId: data.id,
+                nameRU: data.nameRU || 'кино',
+                nameEN: data.nameEN || 'movie',
               })
           })
           .then(this._checkError)
@@ -43,7 +51,8 @@ class MainApi {
   }
 
   deleteMovies(cardId, token) {
-      return fetch(`${ this._urlBase}/cards/${cardId}`, {
+    console.log(cardId, token)
+      return fetch(`${ this._urlBase}/movies/${cardId}`, {
               method: 'DELETE',
               headers: {
                 "Authorization" : `Bearer ${token}`,
@@ -71,7 +80,6 @@ class MainApi {
   }
 
   autorizationProfil(data) {
-    console.log(data)
     return fetch(`${this._urlBase}/signin`, {
             method: 'POST',
             headers: {
