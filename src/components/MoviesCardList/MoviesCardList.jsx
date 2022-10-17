@@ -6,6 +6,7 @@ import screensaver from '../../images/screensaver.svg';
 
 const MoviesCardList = (props) => {
   const [viemMovies, setViemMovies] = useState(0);
+  const [checkbox, setCheckbox] = useState(false);
   const btn = document.querySelector('.movieCardList__button');
 
   const viemBtn = () => {
@@ -15,6 +16,30 @@ const MoviesCardList = (props) => {
       btn.style.display = 'flex';
     }
   }
+
+  const savedDataMoviesAndChecked = () => {
+    if (!localStorage.getItem('savedViemMovies')) {
+      localStorage.setItem('savedViemMovies', JSON.stringify(viemMovies));
+      localStorage.setItem('savedChecked', checkbox);
+    } else {
+      localStorage.removeItem('savedViemMovies');
+      localStorage.removeItem('savedChecked');
+      localStorage.setItem('savedViemMovies', JSON.stringify(viemMovies));
+      localStorage.setItem('savedChecked', checkbox);
+    }
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('savedViemMovies')) {
+      setViemMovies(JSON.parse(localStorage('savedViemMovies')));
+      setCheckbox(localStorage.getItem('savedChecked'));
+    }
+    
+    window.addEventListener('unload', savedDataMoviesAndChecked)
+    return () => {
+      window.removeEventListener('unload', savedDataMoviesAndChecked)
+    }
+  }, [])
 
   useEffect(() => {
     let width = window.innerWidth;
@@ -26,7 +51,7 @@ const MoviesCardList = (props) => {
       setViemMovies(5)
     }
     if (props.searchMovies.length !== 0) {
-   
+      viemBtn()
     }
   }, [props.handleMoviesList]);
 

@@ -6,9 +6,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 const SavedMovies = (props) => {
   return (
     <div className='savedMovies'>
-      <SearchForm />
+      <SearchForm 
+        onSubmit={props.handleSearchSavedMovie}         //
+        defaultSearch={props.defaultSearch}
+        handleSwitchtMovies={props.handleSwitchtMovies}
+        checkbox={props.checkboxSavedMovies}            //
+      />
       <MoviesCardList 
-        savedMovies={props.savedMovies}
+        dataMovies={props.savedMovies}
       />
     </div>
   )
