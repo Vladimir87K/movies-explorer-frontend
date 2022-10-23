@@ -61,14 +61,11 @@
   background-size: contain;
   padding: 0;
   background-color: #fff;
+  background-image: url(../../images/icon-check-inactive.svg);
 }
 
 .card__icon:hover {
   cursor: pointer;
-}
-
-.card__icon_inactive {
-  background-image: url(../../images/icon-check-inactive.svg);
 }
 
 .card__icon_active {

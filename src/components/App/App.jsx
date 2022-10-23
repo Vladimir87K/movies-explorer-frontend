@@ -29,47 +29,105 @@ const App = () => {
   const [textError, setTextError] = useState('');             //текст ошибки
   const [dataMovies, setDataMovies] = useState([]);           //массив полученных фильмов
   const [saveMovies, setSaveMovies] = useState([]);           //массив сохраненных в профиле фильмов
-  const [searchMovies, setSearchMovies] = useState([]);       //массив найденных фильмов
-  const [viemMovies, setViemMovies] = useState([])
+  const [searchMovies, setSearchMovies] = useState([]);       //массив найденных фильмов после выполнения поиска
+  const [saveViemMovies, setSaveViemMovies] = useState([])    //массив показываемых сохраненных фильмов
+  // const [viemMovies, setViemMovies] = useState([])
   const [defaultSearch, setDefaultSearch] = useState(false);  //если фильм не найден - вывести зпголовок
   // const [handleRowMovies, setHandleRowMovies] = useState([])
-  const [handleMoviesList, setHandleMoviesList] = useState(false);
-  const [checkbox, setCheckbox] = useState(false);
-  // const [isLike, setIsLike] = useState(false);
+  const [handleMoviesList, setHandleMoviesList] = useState(false);// переменная для показа/скрытия блока moviesCardList
+  const [checkbox, setCheckbox] = useState(false);             // состояние чекбокса
+  const [viemCountMovies, setViemCountMovies] = useState(0); // количество фильмов на экране при первоначальной загрузке
+  const [viemAddCountMovies, setViemAddCountMovies] = useState(0);   // количество фильмов на экране после нажатия кнопки еще
+  const [viemBtn, setViemBtn] = useState(true);
 
+  useEffect(() => {
+    let width = window.innerWidth;
+    if (width >= 1280) {
+      setViemCountMovies(16);
+      setViemAddCountMovies(4);
+    } else if (width > 1006) {
+      setViemCountMovies(15);
+      setViemAddCountMovies(3);
+    } else if (width > 480) {
+      setViemCountMovies(8);
+      setViemAddCountMovies(2);
+    } else {
+      setViemCountMovies(5);
+      setViemAddCountMovies(2);
+    }
+  }, [searchMovies])
 
-//   useEffect(() => {
-//     const jwt = localStorage.getItem("JWT");
-//     if (jwt) {
-//         auth.getControl(jwt)
-//             .then((res) => {
-//                 setEmail(res.data.email);
-//                 setUser(true);
-//                 setLoggedIn(true);
-//                 setCurrentUser(res.data);
-//                 setToken(jwt);
-//                 navigate("/main");
-//             }).catch((err) => console.log(err))
-//     } else {
-//         navigate("/sign-up");
-//     }
-// }, [loggedIn]);
+  useEffect (() => {         
+    console.log(searchMovies.length, viemCountMovies);                     // показывать кнопку еще или нет
+    console.log()
+    if (searchMovies.length >= viemCountMovies) { 
+      setViemBtn(true);
+    } else {
+      setViemBtn(false);
+    }
+  }, [searchMovies, viemCountMovies])
 
-//   useEffect(() => {
-//     if (token) { 
-//       mainApi.getInitialProfil(token).then((data) => {
-//        setCurrentUser(data);
-//        })
-//        .catch((err) => console.log(err));
+  useEffect(() => {
+    setSaveViemMovies(saveMovies);
+    console.log(saveMovies);
+  }, [saveMovies])
 
-//       mainApi.getInitialMovieList(token).then((data) => {
-//        setCards(data);
-//        })
-//        .catch(err => console.log(err));
-//     }
-// }, [token]);
+  const handleAddMovies = () => {
+    setViemCountMovies(viemCountMovies + viemAddCountMovies);
+  }
 
-  const initialProfil = (token) => {
+  const loadDataMovies = () => {                          // загрузка исходного массива фильмов
+    setLoading(true);
+    moviesApi.then((data) => {
+      console.log(data)
+      setLoading(false);
+      setError(false);
+      setDataMovies(data);
+    })
+    .catch(err => {
+      setLoading(false);
+      setError(true);
+      setTextError(err.message);
+      alert('ошибка загрузки базы данных фильмов', err)
+    })
+  }
+
+  const loadDataSavedMovies = (token) => {                // загрузка фильмов с профиля
+    mainApi.getInitialMovieList(token)
+            .then((res) => {
+              setSaveMovies(res);
+            })
+            .catch((err) => {
+              alert('загрузка сохраненных фильмов: ошибка', err);
+            })
+  }
+
+  const addNewMovie = (movie) => {                        // реакция на лайк - сохранение фильма в свой профиль
+    mainApi.addNewMovies(movie, token)
+        .then((res) => {
+          setSaveMovies((prev) => [...prev, res]);
+        })
+        .catch((err) => {console.log(err)})
+  }
+
+  const deleteMovie = (id) => {                            // удаление фильма из сохраненной базы
+    mainApi.deleteMovies(id, token)
+      .then(() => {
+        setSaveMovies(saveMovies.filter((item) => item._id !== id));
+      })
+      .catch((err) => {console.log(err)})
+  }
+
+  const handleLikeMovie = (e) => {                          // реакция на лайк, выбор удаления или сохранения
+    if (!e.isLike) {
+      addNewMovie(e.e)
+    } else {
+      e.e.id ? deleteMovie(saveMovies.filter((item) => item.movieId === e.e.id)[0]._id)
+      : deleteMovie(saveMovies.filter((item) => item.movieId === e.e.movieId)[0]._id)
+    }
+  }
+
+  const initialProfil = (token) => {                      // запрос данных профиля при входе
     mainApi.getUserProfil(token)
       .then((res) => {
         setCurrentUser(res.data);
@@ -77,7 +135,7 @@ const App = () => {
       .catch((err) => alert('загрузка профиля', err))
   }
 
-  const registration = (data) => {
+  const registration = (data) => {                        // проведение регистрации
     setPassword(data.password);
     mainApi.registrationProfil(data)
       .then((res) => {
@@ -87,7 +145,7 @@ const App = () => {
       .catch((err) => alert('регистрация неудачна', err));
   }
 
-  const autorization = (data) => {
+  const autorization = (data) => {                         // авторизация автоматическая и самостоятельная
     let parole = data.password ? data.password : password;
     mainApi.autorizationProfil({email: data.email, password: parole})
       .then((res) => {
@@ -97,14 +155,8 @@ const App = () => {
           localStorage.setItem('JWT', res.token);
           handleMovies();
           initialProfil(res.token);
-
-          mainApi.getInitialMovieList(res.token)
-            .then((res) => {
-              setSaveMovies(res);
-            })
-            .catch((err) => {
-              alert('загрузка сохраненных фильмов: ошибка', err);
-            })
+          loadDataMovies();
+          loadDataSavedMovies(res.token);
         } else {
           alert('Что-то пошло не так, попробуйте что-нибудь изменить');
         }
@@ -112,7 +164,7 @@ const App = () => {
       .catch((err) => alert('авторизацияЖ ошибка', err))
   }
 
-  const correctProfil = (data) => {
+  const correctProfil = (data) => {                         // изменение данных профиля
     mainApi.correctProfil(data, token)
       .then((res) => {
         setCurrentUser(res);
@@ -120,25 +172,7 @@ const App = () => {
       .catch((err) => alert('изменение профиля: ошибочка', err));
   }
 
-  
-
-  useEffect(() => {
-    setLoading(true);
-    moviesApi.then((data) => {
-      console.log(data)
-      setDataMovies(data);
-      setLoading(false);
-      setError(false);
-    })
-    .catch(err => {
-      setLoading(false);
-      setError(true);
-      setTextError(err.message);
-      alert('ошибка загрузки базы данных фильмов', err)
-    })
-  }, [])
-
-  const handleRegister = () => {
+  const handleRegister = () => { 
     navigate('/signup')
   }
 
@@ -148,7 +182,6 @@ const App = () => {
 
   const handleNavigation = () => {
     setOpenNavigation(true);
-    setLoading(false);
   }
 
   const closeNavigation = () => {
@@ -179,56 +212,43 @@ const App = () => {
     setBackgroundHeader('#fafafa');
   }
 
-
-
-  const handleSearchMovie = (name) => {
-    let width = window.innerWidth;
-    
-    // if (width >= )
+  const handleSearchMovie =  (data) => {
+    console.log(data)
+    let {name, item} = data;
     let nameMovie = name.trim().toLowerCase();
-    setSearchMovies([]);
-    dataMovies.map((movie) => {
-      let nameRU = movie.nameRU.toLowerCase();
-      let nameEN = movie.nameEN.toLowerCase();
-      // console.log(nameEN, nameRU)
-      if (nameRU.includes(nameMovie) || nameEN.includes(nameMovie)) {
-        setDefaultSearch(false);
-        setSearchMovies((prev) => {
-          return [movie, ...prev]
-        });
-        setHandleMoviesList(true);
-      } 
-    })
-  }
-
-  const addNewMovie = (movie) => {
-    mainApi.addNewMovies(movie, token)
-        .then((res) => {
-          setSaveMovies((prev) => [...prev, res])
-        })
-        .catch((err) => {console.log(err)})
-  }
-
-  const deleteMovie = (id) => {
-    let idDeleteMovie = saveMovies.filter((item) => item.movieId === id)[0]._id;
-    console.log(idDeleteMovie)
-    mainApi.deleteMovies(idDeleteMovie, token)
-      .then(() => {
-        setSaveMovies((saveMovies) => saveMovies.filter((item) => item.movieId !== idDeleteMovie))
+    if (item === 1) {
+      setSearchMovies([]);
+      dataMovies.map((movie) => {
+        let nameRU = movie.nameRU.toLowerCase();
+        let nameEN = movie.nameEN.toLowerCase();
+        if (nameRU.includes(nameMovie) || nameEN.includes(nameMovie)) {
+          setDefaultSearch(false);
+          setSearchMovies((prev) => {
+            return [movie, ...prev]
+          });
+          setHandleMoviesList(true);
+        } 
       })
-      .catch((err) => {console.log(err)})
-  }
-
-  const handleLikeMovie = (e) => {
-    if (!e.isLike) {
-      addNewMovie(e.e)
-    } else {
-      deleteMovie(e.e.id);
-    }
+    } else if (item === 2) {
+      if (name === '') {
+        setSaveViemMovies(saveMovies);
+      }
+      setSaveViemMovies([]);
+      saveMovies.map((movie) => {
+        let nameRU = movie.nameRU.toLowerCase();
+        let nameEN = movie.nameEN.toLowerCase();
+        if (nameRU.includes(nameMovie) || nameEN.includes(nameMovie)) {
+          setSaveViemMovies((prev) => {
+            return [movie, ...prev]
+          });
+        } 
+      })
+    }  
   }
 
   const hahdleOutAccount = () => {
     localStorage.clear('JWT');
+    localStorage.clear('searhName')
     setLoggedIn(false);
     setBackgroundHeader('#dddee3')
     navigate('/');
@@ -285,13 +305,17 @@ const App = () => {
                     handleMoviesList={handleMoviesList}
                     handleSwitchtMovies={handleSwitchtMovies}
                     checkbox={checkbox}
-                    viemMovies={viemMovies}
+                    viemCountMovies={viemCountMovies}
+                    showAddMovies={handleAddMovies}
+                    viemBtn={viemBtn}
                   />
                   </ProtectedRoute>
                 } />
                 <Route path='/saved-movies' element={<ProtectedRoute loggedIn={loggedIn} >
                   <SavedMovies
-                    saveMovies={saveMovies}
+                    saveViemMovies={saveViemMovies}
+                    handleLikeMovie={handleLikeMovie}
+                    handleSearchMovie={handleSearchMovie}
                    />
                   </ProtectedRoute>
                 } />

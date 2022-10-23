@@ -7,13 +7,18 @@ const SavedMovies = (props) => {
   return (
     <div className='savedMovies'>
       <SearchForm 
-        onSubmit={props.handleSearchSavedMovie}         //
+        onSubmit={props.handleSearchMovie}         //
         defaultSearch={props.defaultSearch}
         handleSwitchtMovies={props.handleSwitchtMovies}
         checkbox={props.checkboxSavedMovies}            //
       />
       <MoviesCardList 
-        dataMovies={props.savedMovies}
+        handleMoviesList={true}
+        searchMovies={props.saveViemMovies}
+        viemCountMovies={props.saveViemMovies.length}
+        isDelete={true}
+        handleLikeMovie={props.handleLikeMovie}
+        viemBtn={false}
       />
     </div>
   )

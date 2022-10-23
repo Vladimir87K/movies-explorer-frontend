@@ -4,7 +4,6 @@ import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import ProtectedRoute from "../ProtectedRoute";
 
 const Movies = (props) => {
   const [search, setSearch] = useState(false)
@@ -43,10 +42,12 @@ const Movies = (props) => {
       <MoviesCardList  dataMovies={props.dataMovies}
         saveMovies={props.saveMovies}
         searchMovies={props.searchMovies}
-        handleRowMovies={props.handleRowMovies}
         handleMoviesList={props.handleMoviesList}
         handleLikeMovie={props.handleLikeMovie}
         checkbox={props.checkbox}
+        viemCountMovies={props.viemCountMovies}
+        showAddMovies={props.showAddMovies}
+        viemBtn={props.viemBtn}
       />
     </div>
   )

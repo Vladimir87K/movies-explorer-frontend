@@ -16,10 +16,14 @@
 }
 
 .movieCardList__button {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   padding: 50px 0 80px;
+}
+
+.movieCardList__button_action{
+  display: flex;
 }
 
 .movieCardList__btn {

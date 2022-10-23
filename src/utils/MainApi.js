@@ -51,7 +51,7 @@ class MainApi {
   }
 
   deleteMovies(cardId, token) {
-    console.log(cardId, token)
+    console.log(cardId)
       return fetch(`${ this._urlBase}/movies/${cardId}`, {
               method: 'DELETE',
               headers: {
