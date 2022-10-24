@@ -8,6 +8,12 @@ const Register = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [nameDirty, setNameDirty] = useState(false);
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+  const [nameError, setNameError] = useState('Имя не может быть пустым');
+  const [emailError, setEmailError] = useState('Email не может быть пустым');
+  const [passwordError, setPasswordError] = useState('Пароль не может быть пустым');
   const [validate, setValidate] = useState(false)
 
   const validateBtn = () => {

@@ -6,7 +6,8 @@ import lupa from '../../images/lupa.svg';
 
 const SearchForm = (props) => {
   const location = useLocation()
-  const [name, setName] = useState(localStorage.getItem('searchName') ? localStorage.getItem('searchName') : '');
+  let item = (location.pathname === '/movies') ? 1 : 2;
+  const [name, setName] = useState((item === 1) ? (localStorage.getItem('searchName') ? localStorage.getItem('searchName') : '') : '');
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -14,9 +15,11 @@ const SearchForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let item = (location.pathname === '/movies') ? 1 : 2;
     props.onSubmit({name, item});
-    localStorage.setItem('searchName', name)
+    if (item === 1) {
+      localStorage.setItem('searchName', name);
+    }
+    
   }
 
   return (
@@ -29,7 +32,7 @@ const SearchForm = (props) => {
           <button type='submit' className='search-movie__submit'>Найти</button>
         </form>
       </fieldset>
-      <input onClick={props.handleSwitchtMovies} type='checkbox' name='short-movie' id='short-movie' className='short-movie' checked={props.checkbox} />
+      <input onClick={() => props.handleSwitchtMovies(item)} type='checkbox' name='short-movie' id='short-movie' className='short-movie' checked={props.checkbox} />
       <label for='short-movie' className='short-movie_label' checked={props.checked}>Короткометражки</label>
     </div>
   )

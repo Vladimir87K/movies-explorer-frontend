@@ -72,9 +72,13 @@
   top: -10px
 }
 
-.popup__form-error_action {
+.popup__form-error-email_action, .popup__form-error-password_action {
   opacity: 1;
 }
+
+/* .popup__form-error-password_action{
+  opacity: 1;
+} */
 
 .popup__submit {
   position: fixed;

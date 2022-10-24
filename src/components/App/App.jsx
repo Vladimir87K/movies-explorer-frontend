@@ -59,13 +59,12 @@ const App = () => {
 
   useEffect (() => {         
     console.log(searchMovies.length, viemCountMovies);                     // показывать кнопку еще или нет
-    console.log()
     if (searchMovies.length >= viemCountMovies) { 
       setViemBtn(true);
     } else {
       setViemBtn(false);
     }
-  }, [searchMovies, viemCountMovies])
+  }, [searchMovies, viemCountMovies, checkbox])
 
   useEffect(() => {
     setSaveViemMovies(saveMovies);
@@ -248,14 +247,34 @@ const App = () => {
 
   const hahdleOutAccount = () => {
     localStorage.clear('JWT');
-    localStorage.clear('searhName')
+    localStorage.clear('searhName');
+    setCheckbox(false);
     setLoggedIn(false);
     setBackgroundHeader('#dddee3')
     navigate('/');
   }
 
-  const handleSwitchtMovies = () => {
-    setCheckbox(!checkbox);
+  const handleSwitchtMovies = (item) => {
+    console.log(item);
+    if (item === 1) {
+      if (!checkbox) {
+        setSearchMovies(searchMovies.filter((item) => item.duration <= 40));
+        setCheckbox(!checkbox);
+      } else {
+        handleSearchMovie({name: localStorage.getItem('searchName'), item});
+        setCheckbox(!checkbox);
+      }
+    } else if (item === 2) {
+      if (!checkbox) {
+        setSaveViemMovies(saveViemMovies.filter((item) => item.duration <= 40));
+        setCheckbox(!checkbox);
+      } else {
+        console.log('показать все')
+        setSaveViemMovies(saveMovies);
+        setCheckbox(!checkbox);
+      }
+    }
+    // setCheckbox(!checkbox);
   } 
 
   return (
@@ -316,6 +335,7 @@ const App = () => {
                     saveViemMovies={saveViemMovies}
                     handleLikeMovie={handleLikeMovie}
                     handleSearchMovie={handleSearchMovie}
+                    handleSwitchtMovies={handleSwitchtMovies}
                    />
                   </ProtectedRoute>
                 } />

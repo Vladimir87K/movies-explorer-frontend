@@ -71,7 +71,7 @@
   top: -10px
 }
 
-.popup__form-error_action {
+.popup__form-name-error_action .popup__form-email-error_action .popup__form-password-error_action {
   opacity: 1;
 }
 
