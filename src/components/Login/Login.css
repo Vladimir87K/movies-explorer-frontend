@@ -61,6 +61,10 @@
   outline: 1px solid #3456F3;
 }
 
+.popup__form-input_invalid {
+  color: #EE3465
+}
+
 .popup__form-error {
   font-weight: 400;
   font-size: 10px;
@@ -72,7 +76,7 @@
   top: -10px
 }
 
-.popup__form-error-email_action, .popup__form-error-password_action {
+.popup__form-error_action {
   opacity: 1;
 }
 

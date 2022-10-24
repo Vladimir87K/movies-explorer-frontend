@@ -60,11 +60,11 @@ const Login = (props) => {
         <fieldset className='popup__form-content'>
           <form onSubmit={onSubmit} className='popup__form'>
             <p className='popup__form-subtitle'>E-mail</p>
-            <input onBlur={blurHandler} onChange={handleChangeEmail} className='popup__form-input popup__form-email' type='email' name='popup__form-email' id='popup__form-email' value={email} required />
-            <span className={`popup__form-error popup__form-email-error ${emailDirty && emailError && 'popup__form-error-email_action'}`}>{emailError}</span>
+            <input onBlur={blurHandler} onChange={handleChangeEmail} className={`popup__form-input popup__form-email ${emailDirty && emailError && 'popup__form-input_invalid'}`} type='email' name='popup__form-email' id='popup__form-email' value={email} required />
+            <span className={`popup__form-error popup__form-email-error ${emailDirty && emailError && 'popup__form-error_action'}`}>{emailError}</span>
             <p className='popup__form-subtitle'>Пароль</p>
-            <input onBlur={e => blurHandler(e)} onChange={handleChangePassword} className='popup__form-input popup__form-password' type='password' name='popup__form-password' id='popup__form-password' value={password} required />
-            <span className={`popup__form-error ${passwordDirty && 'popup__form-error-password_action'} popup__form-password-error`}>{passwordError}</span>
+            <input onBlur={blurHandler} onChange={handleChangePassword} className={`popup__form-input popup__form-password ${passwordDirty && passwordError && 'popup__form-input_invalid'}`} type='password' name='popup__form-password' id='popup__form-password' value={password} required />
+            <span className={`popup__form-error popup__form-password-error  ${passwordDirty && passwordError && 'popup__form-error_action'}`}>{passwordError}</span>
             <div className='popup__submit'>
               <button className={`popup__form-save ${!validate && 'popup__form-save_disabled'}`} type='submit' disabled={!validate} >Войти</button>
               <p className='popup__paragraph'>Еще не зарегистрированы?<span className='popup__paragraph-link' onClick={props.handleRegister}>Регистрация</span></p>
