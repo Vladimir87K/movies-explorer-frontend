@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import './Register.css';
@@ -32,8 +33,10 @@ const Register = (props) => {
 
   const handleChangeName = (e) => {
     setName(e.target.value);
+    const re = /[^a-z+а-я+\s+ё+\-+]/gi;
     (e.target.value === '') ? setNameError('Имя не может быть пустым')
     : (e.target.value.length < 3) ? setNameError('Имя не короче двух символов')
+    : (re.test(String(e.target.value))) ? setNameError('Использованы недопустимые символы')
     : setNameError('')
   }
 

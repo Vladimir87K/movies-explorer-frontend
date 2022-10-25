@@ -57,8 +57,7 @@ const App = () => {
     }
   }, [searchMovies])
 
-  useEffect (() => {         
-    console.log(searchMovies.length, viemCountMovies);                     // показывать кнопку еще или нет
+  useEffect (() => {                                     // показывать кнопку еще или нет
     if (searchMovies.length >= viemCountMovies) { 
       setViemBtn(true);
     } else {
@@ -66,9 +65,8 @@ const App = () => {
     }
   }, [searchMovies, viemCountMovies, checkbox])
 
-  useEffect(() => {
+  useEffect(() => {                                     // обновление показываемых сохраненных фильмов при лайке или удалении со страницы
     setSaveViemMovies(saveMovies);
-    console.log(saveMovies);
   }, [saveMovies])
 
   const handleAddMovies = () => {
