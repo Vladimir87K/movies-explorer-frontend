@@ -30,12 +30,15 @@ const App = () => {
   const [dataMovies, setDataMovies] = useState([]);           //массив полученных фильмов
   const [saveMovies, setSaveMovies] = useState([]);           //массив сохраненных в профиле фильмов
   const [searchMovies, setSearchMovies] = useState([]);       //массив найденных фильмов после выполнения поиска
+  const [swithMovies, setSwitchtMovies] = useState([]);       //короткометражки фильмов после поиска
   const [saveViemMovies, setSaveViemMovies] = useState([])    //массив показываемых сохраненных фильмов
+  const [swithSaveMovies, setSwitchtSaveMovies] = useState([]);       //короткометражки сохраненных фильмов
   // const [viemMovies, setViemMovies] = useState([])
   const [defaultSearch, setDefaultSearch] = useState(false);  //если фильм не найден - вывести зпголовок
   // const [handleRowMovies, setHandleRowMovies] = useState([])
   const [handleMoviesList, setHandleMoviesList] = useState(false);// переменная для показа/скрытия блока moviesCardList
   const [checkbox, setCheckbox] = useState(false);             // состояние чекбокса
+  const [checkboxSaveMovies, setCheckboxSaveMovies] = useState(false); // состояние чекбокса сохраненных фильмов
   const [viemCountMovies, setViemCountMovies] = useState(0); // количество фильмов на экране при первоначальной загрузке
   const [viemAddCountMovies, setViemAddCountMovies] = useState(0);   // количество фильмов на экране после нажатия кнопки еще
   const [viemBtn, setViemBtn] = useState(true);
@@ -63,14 +66,16 @@ const App = () => {
     } else {
       setViemBtn(false);
     }
+    console.log(searchMovies, swithMovies);
   }, [searchMovies, viemCountMovies, checkbox])
 
   useEffect(() => {                                     // обновление показываемых сохраненных фильмов при лайке или удалении со страницы
-    setSaveViemMovies(saveMovies);
-  }, [saveMovies])
+    setSaveViemMovies(!checkboxSaveMovies ? saveMovies : swithSaveMovies);
+  }, [saveMovies, checkboxSaveMovies])
 
   const handleAddMovies = () => {
     setViemCountMovies(viemCountMovies + viemAddCountMovies);
+    console.log(viemCountMovies, viemAddCountMovies);
   }
 
   const loadDataMovies = () => {                          // загрузка исходного массива фильмов
@@ -93,6 +98,7 @@ const App = () => {
     mainApi.getInitialMovieList(token)
             .then((res) => {
               setSaveMovies(res);
+              setSwitchtSaveMovies(res.filter((movie) => movie.duration <= 40));
             })
             .catch((err) => {
               alert('загрузка сохраненных фильмов: ошибка', err);
@@ -103,6 +109,9 @@ const App = () => {
     mainApi.addNewMovies(movie, token)
         .then((res) => {
           setSaveMovies((prev) => [...prev, res]);
+          if (res.duration <= 40) {
+            setSwitchtSaveMovies((prev) => [...prev, res]);
+          }
         })
         .catch((err) => {console.log(err)})
   }
@@ -215,6 +224,7 @@ const App = () => {
     let nameMovie = name.trim().toLowerCase();
     if (item === 1) {
       setSearchMovies([]);
+      setSwitchtMovies([])
       dataMovies.map((movie) => {
         let nameRU = movie.nameRU.toLowerCase();
         let nameEN = movie.nameEN.toLowerCase();
@@ -223,6 +233,9 @@ const App = () => {
           setSearchMovies((prev) => {
             return [movie, ...prev]
           });
+          if (movie.duration <= 40) {
+            setSwitchtMovies((prev) => [...prev, movie])
+          }
           setHandleMoviesList(true);
         } 
       })
@@ -252,28 +265,34 @@ const App = () => {
     navigate('/');
   }
 
+  // const handleSwitchtMovies = (item) => {
+  //   console.log(item);
+  //   if (item === 1) {
+  //     if (!checkbox) {
+  //       setSearchMovies(searchMovies.filter((item) => item.duration <= 40));
+  //       setCheckbox(!checkbox);
+  //     } else {
+  //       handleSearchMovie({name: localStorage.getItem('searchName'), item});
+  //       setCheckbox(!checkbox);
+  //     }
+  //   } else if (item === 2) {
+  //     if (!checkbox) {
+  //       setSaveViemMovies(saveViemMovies.filter((item) => item.duration <= 40));
+  //       setCheckbox(!checkbox);
+  //     } else {
+  //       setSaveViemMovies(saveMovies);
+  //       setCheckbox(!checkbox);
+  //     }
+  //   }
+  //   // setCheckbox(!checkbox);
+  // } 
   const handleSwitchtMovies = (item) => {
-    console.log(item);
     if (item === 1) {
-      if (!checkbox) {
-        setSearchMovies(searchMovies.filter((item) => item.duration <= 40));
-        setCheckbox(!checkbox);
-      } else {
-        handleSearchMovie({name: localStorage.getItem('searchName'), item});
-        setCheckbox(!checkbox);
-      }
+      setCheckbox(!checkbox);
     } else if (item === 2) {
-      if (!checkbox) {
-        setSaveViemMovies(saveViemMovies.filter((item) => item.duration <= 40));
-        setCheckbox(!checkbox);
-      } else {
-        console.log('показать все')
-        setSaveViemMovies(saveMovies);
-        setCheckbox(!checkbox);
-      }
+      setCheckboxSaveMovies(!checkboxSaveMovies)
     }
-    // setCheckbox(!checkbox);
-  } 
+  }
 
   return (
     <div className='page'>
@@ -313,8 +332,7 @@ const App = () => {
                   <Movies 
                     loading={loading}
                     error={error}
-                    searchMovies={searchMovies} 
-                    dataMovies={dataMovies}
+                    searchMovies={!checkbox ? searchMovies : swithMovies} 
                     saveMovies={saveMovies}
                     handleLikeMovie={handleLikeMovie} 
                     handleSearchMovie={handleSearchMovie}
@@ -330,7 +348,8 @@ const App = () => {
                 } />
                 <Route path='/saved-movies' element={<ProtectedRoute loggedIn={loggedIn} >
                   <SavedMovies
-                    saveViemMovies={saveViemMovies}
+                    checkbox={checkboxSaveMovies}
+                    saveViemMovies={!checkboxSaveMovies ? saveViemMovies : swithSaveMovies}
                     handleLikeMovie={handleLikeMovie}
                     handleSearchMovie={handleSearchMovie}
                     handleSwitchtMovies={handleSwitchtMovies}

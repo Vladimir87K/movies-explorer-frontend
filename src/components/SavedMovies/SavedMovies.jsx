@@ -7,10 +7,10 @@ const SavedMovies = (props) => {
   return (
     <div className='savedMovies'>
       <SearchForm 
-        onSubmit={props.handleSearchMovie}         //
+        onSubmit={props.handleSearchMovie}         
         defaultSearch={props.defaultSearch}
         handleSwitchtMovies={props.handleSwitchtMovies}
-        checkbox={props.checkboxSavedMovies}            //
+        checkbox={props.checkbox}            
       />
       <MoviesCardList 
         handleMoviesList={true}

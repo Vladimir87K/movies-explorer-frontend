@@ -5,12 +5,11 @@ import screensaver from '../../images/screensaver.svg';
 
 const MoviesCard = (props) => {
   const [isLike, setIsLike] = useState(props.isLike);
-  const movieImage = props.movieImg ? (props.movieImg.includes('https://api.nomoreparties.co/') ? props.movieImg : ('https://api.nomoreparties.co/' + props.movieImg)) : screensaver;
-  let longMovie = false;
-
-  if (props.movieTime < 40) {
-    longMovie = true;
-  }
+  const movieImage = props.movieImg 
+    ? (props.movieImg.includes('https://api.nomoreparties.co/') 
+    ? props.movieImg 
+    : ('https://api.nomoreparties.co/' + props.movieImg)) 
+    : screensaver;
 
   const handleTrailer = () => {
     window.open(props.movieTrailer, "_blank")
@@ -38,14 +37,17 @@ const MoviesCard = (props) => {
   }
   
   return (
-    <div className={`card ${!longMovie && props.checkbox && 'card_inaction'}`}>
+    <div className={`card `}>
       <img onClick={handleTrailer} className='card__image' src={movieImage} alt='постер фильма' />
         <div className='card__content'>
           <div className='card__info'>
             <h2 className='card__title'>{props.movieTitle}</h2>
             <p className='card__time'>{timeMovie(props.movieTime)}</p>
           </div>
-          <button onClick={() => {likeMovie(props.movie)}} className={`card__icon ${isLike && 'card__icon_active'} ${props.isDelete && 'card__icon_delete'}`} type='button'></button>
+          <button onClick={() => {likeMovie(props.movie)}}
+            className={`card__icon ${isLike && 'card__icon_active'} ${props.isDelete && 'card__icon_delete'}`} 
+            type='button'>
+          </button>
         </div>
     </div>
   )

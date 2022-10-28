@@ -7,7 +7,12 @@ import lupa from '../../images/lupa.svg';
 const SearchForm = (props) => {
   const location = useLocation()
   let item = (location.pathname === '/movies') ? 1 : 2;
-  const [name, setName] = useState((item === 1) ? (localStorage.getItem('searchName') ? localStorage.getItem('searchName') : '') : '');
+  const [name, setName] = useState(
+    (item === 1) 
+    ? (localStorage.getItem('searchName') 
+    ? localStorage.getItem('searchName') 
+    : '') 
+    : '');
 
   const handleChange = (e) => {
     setName(e.target.value);

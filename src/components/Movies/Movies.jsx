@@ -44,7 +44,6 @@ const Movies = (props) => {
         searchMovies={props.searchMovies}
         handleMoviesList={props.handleMoviesList}
         handleLikeMovie={props.handleLikeMovie}
-        checkbox={props.checkbox}
         viemCountMovies={props.viemCountMovies}
         showAddMovies={props.showAddMovies}
         viemBtn={props.viemBtn}
