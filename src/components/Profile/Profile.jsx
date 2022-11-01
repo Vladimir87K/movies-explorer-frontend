@@ -13,7 +13,7 @@ const Profile = (props) => {
   useEffect(() => {
     setName(userContext.name);
     setEmail(userContext.email);
-    console.log(userContext);
+    console.log('Что имеем:', userContext);
   }, [userContext]); 
 
   const validateBtn = () => {

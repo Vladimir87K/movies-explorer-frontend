@@ -32,10 +32,8 @@ const App = () => {
   const [searchMovies, setSearchMovies] = useState([]);       //массив найденных фильмов после выполнения поиска
   const [swithMovies, setSwitchtMovies] = useState([]);       //короткометражки фильмов после поиска
   const [saveViemMovies, setSaveViemMovies] = useState([])    //массив показываемых сохраненных фильмов
-  const [swithSaveMovies, setSwitchtSaveMovies] = useState([]);       //короткометражки сохраненных фильмов
-  // const [viemMovies, setViemMovies] = useState([])
+  const [switchSaveMovies, setSwitchSaveMovies] = useState([]);       //короткометражки сохраненных фильмов
   const [defaultSearch, setDefaultSearch] = useState(false);  //если фильм не найден - вывести зпголовок
-  // const [handleRowMovies, setHandleRowMovies] = useState([])
   const [handleMoviesList, setHandleMoviesList] = useState(false);// переменная для показа/скрытия блока moviesCardList
   const [checkbox, setCheckbox] = useState(false);             // состояние чекбокса
   const [checkboxSaveMovies, setCheckboxSaveMovies] = useState(false); // состояние чекбокса сохраненных фильмов
@@ -61,16 +59,16 @@ const App = () => {
   }, [searchMovies])
 
   useEffect (() => {                                     // показывать кнопку еще или нет
-    if (searchMovies.length >= viemCountMovies) { 
+    let viemMovie = !checkbox ? searchMovies : switchSaveMovies;
+    if (viemMovie.length >= viemCountMovies) { 
       setViemBtn(true);
     } else {
       setViemBtn(false);
     }
-    console.log(searchMovies, swithMovies);
   }, [searchMovies, viemCountMovies, checkbox])
 
   useEffect(() => {                                     // обновление показываемых сохраненных фильмов при лайке или удалении со страницы
-    setSaveViemMovies(!checkboxSaveMovies ? saveMovies : swithSaveMovies);
+    setSaveViemMovies(!checkboxSaveMovies ? saveMovies : switchSaveMovies);
   }, [saveMovies, checkboxSaveMovies])
 
   const handleAddMovies = () => {
@@ -98,7 +96,7 @@ const App = () => {
     mainApi.getInitialMovieList(token)
             .then((res) => {
               setSaveMovies(res);
-              setSwitchtSaveMovies(res.filter((movie) => movie.duration <= 40));
+              setSwitchSaveMovies(res.filter((movie) => movie.duration <= 40));
             })
             .catch((err) => {
               alert('загрузка сохраненных фильмов: ошибка', err);
@@ -110,7 +108,7 @@ const App = () => {
         .then((res) => {
           setSaveMovies((prev) => [...prev, res]);
           if (res.duration <= 40) {
-            setSwitchtSaveMovies((prev) => [...prev, res]);
+            setSwitchSaveMovies((prev) => [...prev, res]);
           }
         })
         .catch((err) => {console.log(err)})
@@ -120,6 +118,7 @@ const App = () => {
     mainApi.deleteMovies(id, token)
       .then(() => {
         setSaveMovies(saveMovies.filter((item) => item._id !== id));
+        setSwitchSaveMovies(switchSaveMovies.filter((item) => item._id !== id))
       })
       .catch((err) => {console.log(err)})
   }
@@ -171,9 +170,11 @@ const App = () => {
   }
 
   const correctProfil = (data) => {                         // изменение данных профиля
+    console.log(data)
     mainApi.correctProfil(data, token)
       .then((res) => {
-        setCurrentUser(res);
+        console.log(res.data);
+        setCurrentUser(res.data);
       })
       .catch((err) => alert('изменение профиля: ошибочка', err));
   }
@@ -219,7 +220,6 @@ const App = () => {
   }
 
   const handleSearchMovie =  (data) => {
-    console.log(data)
     let {name, item} = data;
     let nameMovie = name.trim().toLowerCase();
     if (item === 1) {
@@ -240,9 +240,6 @@ const App = () => {
         } 
       })
     } else if (item === 2) {
-      if (name === '') {
-        setSaveViemMovies(saveMovies);
-      }
       setSaveViemMovies([]);
       saveMovies.map((movie) => {
         let nameRU = movie.nameRU.toLowerCase();
@@ -265,27 +262,6 @@ const App = () => {
     navigate('/');
   }
 
-  // const handleSwitchtMovies = (item) => {
-  //   console.log(item);
-  //   if (item === 1) {
-  //     if (!checkbox) {
-  //       setSearchMovies(searchMovies.filter((item) => item.duration <= 40));
-  //       setCheckbox(!checkbox);
-  //     } else {
-  //       handleSearchMovie({name: localStorage.getItem('searchName'), item});
-  //       setCheckbox(!checkbox);
-  //     }
-  //   } else if (item === 2) {
-  //     if (!checkbox) {
-  //       setSaveViemMovies(saveViemMovies.filter((item) => item.duration <= 40));
-  //       setCheckbox(!checkbox);
-  //     } else {
-  //       setSaveViemMovies(saveMovies);
-  //       setCheckbox(!checkbox);
-  //     }
-  //   }
-  //   // setCheckbox(!checkbox);
-  // } 
   const handleSwitchtMovies = (item) => {
     if (item === 1) {
       setCheckbox(!checkbox);
@@ -349,7 +325,7 @@ const App = () => {
                 <Route path='/saved-movies' element={<ProtectedRoute loggedIn={loggedIn} >
                   <SavedMovies
                     checkbox={checkboxSaveMovies}
-                    saveViemMovies={!checkboxSaveMovies ? saveViemMovies : swithSaveMovies}
+                    saveViemMovies={!checkboxSaveMovies ? saveViemMovies : switchSaveMovies}
                     handleLikeMovie={handleLikeMovie}
                     handleSearchMovie={handleSearchMovie}
                     handleSwitchtMovies={handleSwitchtMovies}

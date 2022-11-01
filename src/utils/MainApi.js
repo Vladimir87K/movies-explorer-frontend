@@ -94,7 +94,7 @@ class MainApi {
   }
 
   correctProfil(data, token) {
-    console.log(data.email, token);
+    console.log(data.name, data.email, token);
       return fetch(`${this._urlBase}/users/me`, {
               method: 'PATCH',
               headers: {
