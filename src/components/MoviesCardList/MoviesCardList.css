@@ -1,5 +1,5 @@
 .movieCardList {
-  width: calc(98vw - 140px);
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -10,7 +10,7 @@
 .cardList {
   padding-top: 70px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, auto));
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-column-gap: 20px;
   grid-row-gap: 32px;
@@ -43,9 +43,16 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 1279px) {
+  .cardList {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
 @media screen and (max-width: 868px) {
   .cardList {
     grid-template-columns: 1fr 1fr;
+    width: 100%;
   }
 }
 
