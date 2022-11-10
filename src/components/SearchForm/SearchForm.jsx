@@ -22,9 +22,9 @@ const SearchForm = (props) => {
     e.preventDefault();
     props.onSubmit({name, item});
     if (item === 1) {
-      localStorage.setItem('searchName', name);
+      
     }
-    
+    setName('');
   }
 
   return (
@@ -32,7 +32,15 @@ const SearchForm = (props) => {
       <fieldset className='search-movie'>
         <form onSubmit={handleSubmit}  className='search-movie__form'>
           <img src={lupa} alt='лупа' className='search-movie__image' />
-          <input onChange={handleChange} id='search-movie__input' type='text' className='search-movie__input' name='search-movie__input' placeholder={`${(props.defaultSearch && 'Ничего не найдено') || 'Фильмы'}`} value={name} required />
+          <input onChange={handleChange} 
+            id='search-movie__input' 
+            type='text' 
+            className='search-movie__input' 
+            name='search-movie__input' 
+            placeholder={`${(!props.defaultSearch && 'Ничего не найдено') || 'Фильмы'}`}  //
+            value={name} 
+            required
+          />
           <span className='search-movie__error'></span>
           <button type='submit' className='search-movie__submit'>Найти</button>
         </form>

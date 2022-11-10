@@ -8,7 +8,7 @@ const SavedMovies = (props) => {
     <div className='savedMovies'>
       <SearchForm 
         onSubmit={props.handleSearchMovie}         
-        defaultSearch={props.defaultSearch}
+        defaultSearch={true}
         handleSwitchtMovies={props.handleSwitchtMovies}
         checkbox={props.checkbox}            
       />

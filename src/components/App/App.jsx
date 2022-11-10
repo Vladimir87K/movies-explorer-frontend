@@ -33,7 +33,6 @@ const App = () => {
   const [swithMovies, setSwitchtMovies] = useState([]);       //короткометражки фильмов после поиска
   const [saveViemMovies, setSaveViemMovies] = useState([])    //массив показываемых сохраненных фильмов
   const [switchSaveMovies, setSwitchSaveMovies] = useState([]);       //короткометражки сохраненных фильмов
-  const [defaultSearch, setDefaultSearch] = useState(false);  //если фильм не найден - вывести зпголовок
   const [handleMoviesList, setHandleMoviesList] = useState(false);// переменная для показа/скрытия блока moviesCardList
   const [checkbox, setCheckbox] = useState(false);             // состояние чекбокса
   const [checkboxSaveMovies, setCheckboxSaveMovies] = useState(false); // состояние чекбокса сохраненных фильмов
@@ -41,7 +40,27 @@ const App = () => {
   const [viemAddCountMovies, setViemAddCountMovies] = useState(0);   // количество фильмов на экране после нажатия кнопки еще
   const [viemBtn, setViemBtn] = useState(true);
 
-  useEffect(() => {
+  useEffect (() => {
+    const jwt = localStorage.getItem('JWT');
+    if (jwt) {
+      setLoggedIn(true);
+      setToken(jwt);
+      setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
+      // setBackgroundHeader('#fafafa')
+      setDataMovies(JSON.parse(localStorage.getItem('dataMovies')));
+      setSaveMovies(JSON.parse(localStorage.getItem('saveMovies')));
+      setSwitchSaveMovies(JSON.parse(localStorage.getItem('switchSaveMovies')));
+      setSearchMovies(JSON.parse(localStorage.getItem('searchMovies')));
+      setSwitchtMovies(JSON.parse(localStorage.getItem('swithMovies')));
+      setCheckbox(localStorage.getItem('checkbox'));
+      setHandleMoviesList(true);
+      setError(false);
+      console.log('загрузка из локального хранилища прошла успешно');
+      navigate('/');
+    }
+  }, [])
+
+  useEffect(() => {                                     // расчет количества показываемых карточек и количества добавляемых
     let width = window.innerWidth;
     if (width >= 1280) {
       setViemCountMovies(16);
@@ -65,6 +84,10 @@ const App = () => {
     } else {
       setViemBtn(false);
     }
+    if (searchMovies.length !== 0) {
+      localStorage.setItem('swithMovies', JSON.stringify(swithMovies));
+     localStorage.setItem('searchMovies', JSON.stringify(searchMovies));
+    }
   }, [searchMovies, viemCountMovies, checkbox])
 
   useEffect(() => {                                     // обновление показываемых сохраненных фильмов при лайке или удалении со страницы
@@ -76,6 +99,10 @@ const App = () => {
     console.log(viemCountMovies, viemAddCountMovies);
   }
 
+  const addLocalStorege = (name, data) => {
+    localStorage.setItem(name, JSON.stringify(data))
+  }
+
   const loadDataMovies = () => {                          // загрузка исходного массива фильмов
     setLoading(true);
     moviesApi.then((data) => {
@@ -83,6 +110,7 @@ const App = () => {
       setLoading(false);
       setError(false);
       setDataMovies(data);
+      addLocalStorege('dataMovies', data)
     })
     .catch(err => {
       setLoading(false);
@@ -96,7 +124,10 @@ const App = () => {
     mainApi.getInitialMovieList(token)
             .then((res) => {
               setSaveMovies(res);
-              setSwitchSaveMovies(res.filter((movie) => movie.duration <= 40));
+              addLocalStorege('saveMovies', res)
+              let switchMovies = res.filter((movie) => movie.duration <= 40);
+              setSwitchSaveMovies(switchMovies);
+              addLocalStorege('switchSaveMovies', switchMovies);
             })
             .catch((err) => {
               alert('загрузка сохраненных фильмов: ошибка', err);
@@ -136,6 +167,7 @@ const App = () => {
     mainApi.getUserProfil(token)
       .then((res) => {
         setCurrentUser(res.data);
+        addLocalStorege('currentUser', res.data)
       })
       .catch((err) => alert('загрузка профиля', err))
   }
@@ -173,8 +205,8 @@ const App = () => {
     console.log(data)
     mainApi.correctProfil(data, token)
       .then((res) => {
-        console.log(res.data);
         setCurrentUser(res.data);
+        alert('Данные профиля успешно изменены')
       })
       .catch((err) => alert('изменение профиля: ошибочка', err));
   }
@@ -223,13 +255,13 @@ const App = () => {
     let {name, item} = data;
     let nameMovie = name.trim().toLowerCase();
     if (item === 1) {
+      setLoading(true);
       setSearchMovies([]);
       setSwitchtMovies([])
       dataMovies.map((movie) => {
         let nameRU = movie.nameRU.toLowerCase();
         let nameEN = movie.nameEN.toLowerCase();
         if (nameRU.includes(nameMovie) || nameEN.includes(nameMovie)) {
-          setDefaultSearch(false);
           setSearchMovies((prev) => {
             return [movie, ...prev]
           });
@@ -238,7 +270,9 @@ const App = () => {
           }
           setHandleMoviesList(true);
         } 
+        setLoading(false);
       })
+      localStorage.setItem('searchName', name);
     } else if (item === 2) {
       setSaveViemMovies([]);
       saveMovies.map((movie) => {
@@ -254,8 +288,7 @@ const App = () => {
   }
 
   const hahdleOutAccount = () => {
-    localStorage.clear('JWT');
-    localStorage.clear('searhName');
+    localStorage.clear();
     setCheckbox(false);
     setLoggedIn(false);
     setBackgroundHeader('#dddee3')
@@ -265,6 +298,7 @@ const App = () => {
   const handleSwitchtMovies = (item) => {
     if (item === 1) {
       setCheckbox(!checkbox);
+      localStorage.setItem('checkbox', !checkbox ? checkbox : '');
     } else if (item === 2) {
       setCheckboxSaveMovies(!checkboxSaveMovies)
     }
@@ -308,11 +342,10 @@ const App = () => {
                   <Movies 
                     loading={loading}
                     error={error}
-                    searchMovies={!checkbox ? searchMovies : swithMovies} 
+                    searchMovies={!checkbox ? searchMovies : swithMovies}
                     saveMovies={saveMovies}
                     handleLikeMovie={handleLikeMovie} 
                     handleSearchMovie={handleSearchMovie}
-                    defaultSearch={defaultSearch}
                     handleMoviesList={handleMoviesList}
                     handleSwitchtMovies={handleSwitchtMovies}
                     checkbox={checkbox}
