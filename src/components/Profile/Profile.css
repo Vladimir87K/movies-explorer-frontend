@@ -52,6 +52,19 @@
   border-bottom: 1px solid #000;
 }
 
+.profile__form-error {
+  text-align: center;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  opacity: 0;
+}
+
+.profil__form-error_action {
+  opacity: 1;
+}
+
 .profile__form-block-buttom {
   width: 410px;
   display: flex;
@@ -80,6 +93,10 @@
 .profile__button:last-child {
   margin-bottom: 0;
   color: red;
+}
+
+.profile__form-save {
+  color: #000
 }
 
 .profile__form-save_disabled {

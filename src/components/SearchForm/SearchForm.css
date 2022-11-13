@@ -123,6 +123,10 @@
     justify-content: space-between;
   }
 
+  .search-movie__form {
+    display: flex;
+  }
+
   .search-movie__image {
     display: none;
   }

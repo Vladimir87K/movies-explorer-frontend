@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import { useNavigate,useLocation, Routes, Route } from 'react-router-dom';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import './App.css';
 import Header from '../Header/Header';
@@ -18,6 +18,7 @@ import ProtectedRoute from '../ProtectedRoute';
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentUser, setCurrentUser] = useState({});
   const [password, setPassword] = useState('')
   const [isOpenNavigation, setOpenNavigation] = useState(false);
@@ -56,7 +57,9 @@ const App = () => {
       setHandleMoviesList(true);
       setError(false);
       console.log('загрузка из локального хранилища прошла успешно');
-      navigate('/');
+      if (location.pathname !== '/') {
+        setBackgroundHeader('#fafafa');
+      }
     }
   }, [])
 

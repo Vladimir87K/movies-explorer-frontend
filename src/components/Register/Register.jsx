@@ -37,13 +37,10 @@ const Register = (props) => {
     console.log(userName, control);
     setName(userName);
     if (control) {
-      console.log('так нельзя');
       setNameError('Использованы недопустимые символы');
     } else if (userName.length < 2 && userName.length > 0) {
-      console.log('так тоже нельзя');
       setNameError('Имя не короче двух символов');
     } else if (userName === '') {
-      console.log('так все еще нельзя');
       setNameError('Имя не может быть пустым');
     } else {
       setNameError('');
