@@ -37,7 +37,7 @@ const MoviesCard = (props) => {
   }
   
   return (
-    <div className={`card `}>
+    <div className={`card`}>
       <img onClick={handleTrailer} className='card__image' src={movieImage} alt='постер фильма' />
         <div className='card__content'>
           <div className='card__info'>

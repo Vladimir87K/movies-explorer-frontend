@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import './Profile.css';
-import { reEmail, reName, testName } from '../../utils/utils';
+import { reEmail, testName } from '../../utils/utils';
 
 const Profile = (props) => {
   const userContext = useContext(CurrentUserContext);
@@ -21,10 +21,12 @@ const Profile = (props) => {
   }, [userContext]); 
 
   useEffect(() => {
-    (nameError || emailError)
+    (nameError !== '' || emailError !== '')
     ? setValidate(false) 
+    : (name === userContext.name && email === userContext.email)
+    ? setValidate(false)
     : setValidate(true);
-  }, [name, email]);
+  }, [nameError, emailError, name, email]);
 
   const blurHandler = (e) => {
     if (e.target.type === 'text') {
@@ -35,19 +37,15 @@ const Profile = (props) => {
   }
 
   const handleChangeName = (e) => {
+    blurHandler(e);
     let userName = e.target.value;
-    let control = testName(userName);
-    console.log(userName, control);
     setName(userName);
-    if (!control) {
-      console.log('так нельзя');
-      setNameError('Использованы недопустимые символы');
-    } else if (userName.length < 2 && userName.length > 0) {
-      console.log('так тоже нельзя');
-      setNameError('Имя не короче двух символов');
-    } else if (userName === '') {
-      console.log('так все еще нельзя');
+    if (userName === '') {
       setNameError('Имя не может быть пустым');
+    } else if (userName.length < 2 && userName.length > 0) {
+      setNameError('Имя не короче двух символов');
+    } else if (!testName(userName)) {
+      setNameError('Использованы недопустимые символы');
     } else if (userName === userContext.name) {
       setNameError('Имя не изменено');
     } else {
@@ -56,8 +54,8 @@ const Profile = (props) => {
   }
 
   const handleChangeEmail = (e) => {
+    blurHandler(e);
     setEmail(e.target.value);
-    console.log(e.target.value)
     if (e.target.value === '') {
       setEmailError('Email не может быть пустым')
     } else if (!reEmail.test(String(e.target.value).toLowerCase())) {
@@ -88,7 +86,7 @@ const Profile = (props) => {
         <form onSubmit={onSubmit} className='profile__form'>
           <div className='profile__form-block-input'>
             <span className={`profile__form-error profile__form-name-error ${nameDirty && nameError && 'profil__form-error_action'}`}>
-              {nameError || (nameError && 1)}
+              {nameError || 1}
             </span>
             <p className='profile__form-subtitle'>Имя</p>
             <input  onBlur={blurHandler}
@@ -117,9 +115,9 @@ const Profile = (props) => {
             </span>
           </div>
           <div className='profile__form-block-buttom'>
-            <button className={`profile__button profile__form-save ${validate && 'profile__form-save_disabled'}`} 
+            <button className={`profile__button profile__form-save ${!validate && 'profile__form-save_disabled'}`} 
               type='submit' 
-              disabled={validate} >
+              disabled={!validate} >
               Редактировать
             </button>
             <button onClick={props.hahdleOutAccount} 

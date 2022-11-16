@@ -107,6 +107,7 @@
 @media screen and (max-width: 868px) {
   .search {
     padding: 86px 0 62px;  
+    width: 100%;
   }
 
   .search-movie__input {

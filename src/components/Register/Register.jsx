@@ -33,15 +33,13 @@ const Register = (props) => {
 
   const handleChangeName = (e) => {
     let userName = e.target.value;
-    let control = testName(userName);
-    console.log(userName, control);
     setName(userName);
-    if (control) {
-      setNameError('Использованы недопустимые символы');
+    if (userName === '') {
+      setNameError('Имя не может быть пустым');
     } else if (userName.length < 2 && userName.length > 0) {
       setNameError('Имя не короче двух символов');
-    } else if (userName === '') {
-      setNameError('Имя не может быть пустым');
+    } else if (!testName(userName)) {
+      setNameError('Использованы недопустимые символы');
     } else {
       setNameError('');
     }
