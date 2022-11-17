@@ -1,13 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Page404.css';
 
 const Page404 = () => {
-  const navigate = useNavigate();
 
   const onClick = (e) => {
     e.preventDefault();
-    navigate('/')
+    window.history.back();
   }
 
   return (
