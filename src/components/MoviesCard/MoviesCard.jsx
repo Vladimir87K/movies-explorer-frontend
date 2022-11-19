@@ -35,7 +35,7 @@ const MoviesCard = (props) => {
       return `${time}м`
     }
   }
-  
+
   return (
     <div className={`card`}>
       <img onClick={handleTrailer} className='card__image' src={movieImage} alt='постер фильма' />

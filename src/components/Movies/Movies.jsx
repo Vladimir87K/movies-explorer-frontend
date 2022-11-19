@@ -39,7 +39,7 @@ const Movies = (props) => {
       <h2 className={`movies__message ${!props.error && search && 'movies__message_inaction'}`}>
         Необходимо выполнить поиск фильма по ключевому слову в названии. На данный момент фильмы не найдены.
       </h2>
-      <MoviesCardList  dataMovies={props.dataMovies}//?
+      <MoviesCardList
         saveMovies={props.saveMovies}
         searchMovies={props.searchMovies}
         handleMoviesList={props.handleMoviesList}

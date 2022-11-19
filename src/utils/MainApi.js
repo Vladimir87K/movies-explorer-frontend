@@ -22,7 +22,6 @@ class MainApi {
                 }
           })
           .then(this._checkError)
-          .then((res) => res.data)
   }
 
   addNewMovies(data, token) {
@@ -47,11 +46,9 @@ class MainApi {
               })
           })
           .then(this._checkError)
-          .then((res) => res.data)
   }
 
   deleteMovies(cardId, token) {
-    console.log(cardId)
       return fetch(`${ this._urlBase}/movies/${cardId}`, {
               method: 'DELETE',
               headers: {
@@ -60,7 +57,6 @@ class MainApi {
                 }
           })
           .then(this._checkError)
-          .then((res) => res.data)
   }
   
   registrationProfil(data) {
@@ -122,7 +118,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    urlBase: 'http://localhost:3001',
+    urlBase: 'http://api.mymovies.nomoredomains.icu',
     headers: {
         'Content-Type': 'application/json'
     }

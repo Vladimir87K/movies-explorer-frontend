@@ -49,14 +49,16 @@ const App = () => {
       setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
       // setBackgroundHeader('#fafafa')
       setDataMovies(JSON.parse(localStorage.getItem('dataMovies')));
-      setSaveMovies(JSON.parse(localStorage.getItem('saveMovies')));
-      setSwitchSaveMovies(JSON.parse(localStorage.getItem('switchSaveMovies')));
+      
       setSearchMovies(JSON.parse(localStorage.getItem('searchMovies')));
       setSwitchtMovies(JSON.parse(localStorage.getItem('swithMovies')));
       setCheckbox(localStorage.getItem('checkbox'));
       setHandleMoviesList(true);
       setError(false);
-      console.log('загрузка из локального хранилища прошла успешно');
+      if (localStorage.getItem('saveMovies') !== 'undefined') {
+        setSaveMovies(JSON.parse(localStorage.getItem('saveMovies')));
+        setSwitchSaveMovies(JSON.parse(localStorage.getItem('switchSaveMovies')));
+      }
       if (location.pathname !== '/') {
         setBackgroundHeader('#fafafa');
       }
@@ -82,15 +84,17 @@ const App = () => {
 
   useEffect (() => {                                     // показывать кнопку еще или нет
     let viemMovie = !checkbox ? searchMovies : switchSaveMovies;
-    if (viemMovie.length >= viemCountMovies) { 
-      setViemBtn(true);
-    } else {
-      setViemBtn(false);
-    }
-    if (searchMovies.length !== 0) {
-      localStorage.setItem('swithMovies', JSON.stringify(swithMovies));
-     localStorage.setItem('searchMovies', JSON.stringify(searchMovies));
-    }
+    if (viemMovie !== null) {
+      if (viemMovie.length >= viemCountMovies) { 
+        setViemBtn(true);
+      } else {
+        setViemBtn(false);
+      }
+      if (searchMovies.length !== 0) {
+        localStorage.setItem('swithMovies', JSON.stringify(swithMovies));
+        localStorage.setItem('searchMovies', JSON.stringify(searchMovies));
+      }
+    } 
   }, [searchMovies, viemCountMovies, checkbox])
 
   useEffect(() => {                                     // обновление показываемых сохраненных фильмов при лайке или удалении со страницы
@@ -99,21 +103,19 @@ const App = () => {
 
   const handleAddMovies = () => {
     setViemCountMovies(viemCountMovies + viemAddCountMovies);
-    console.log(viemCountMovies, viemAddCountMovies);
   }
 
-  const addLocalStorege = (name, data) => {
+  const addLocalStorage = (name, data) => {
     localStorage.setItem(name, JSON.stringify(data))
   }
 
   const loadDataMovies = () => {                          // загрузка исходного массива фильмов
     setLoading(true);
     moviesApi.then((data) => {
-      console.log(data)
       setLoading(false);
       setError(false);
       setDataMovies(data);
-      addLocalStorege('dataMovies', data)
+      addLocalStorage('dataMovies', data)
     })
     .catch(err => {
       setLoading(false);
@@ -127,10 +129,12 @@ const App = () => {
     mainApi.getInitialMovieList(token)
             .then((res) => {
               setSaveMovies(res);
-              addLocalStorege('saveMovies', res)
               let switchMovies = res.filter((movie) => movie.duration <= 40);
               setSwitchSaveMovies(switchMovies);
-              addLocalStorege('switchSaveMovies', switchMovies);
+              if (res !== undefined) {
+                addLocalStorage('saveMovies', res);
+                addLocalStorage('switchSaveMovies', switchMovies);
+              }
             })
             .catch((err) => {
               alert('загрузка сохраненных фильмов: ошибка', err);
@@ -138,39 +142,51 @@ const App = () => {
   }
 
   const addNewMovie = (movie) => {                        // реакция на лайк - сохранение фильма в свой профиль
+    let movies = [];
+    let switchMovies = [];
     mainApi.addNewMovies(movie, token)
         .then((res) => {
-          setSaveMovies((prev) => [...prev, res]);
+          movies = [...saveMovies, res]
+          setSaveMovies(movies)
+          addLocalStorage('saveMovies', movies);
           if (res.duration <= 40) {
-            setSwitchSaveMovies((prev) => [...prev, res]);
+            switchMovies = [...switchSaveMovies, res];
+            setSwitchSaveMovies(switchMovies);
+            addLocalStorage('switchSaveMovies', switchMovies);
           }
         })
-        .catch((err) => {console.log(err)})
+        .catch((err) => {alert('Что-то пошло не так,', err)})
   }
 
   const deleteMovie = (id) => {                            // удаление фильма из сохраненной базы
+    let movies = [];
+    let switchMovies = [];
     mainApi.deleteMovies(id, token)
       .then(() => {
-        setSaveMovies(saveMovies.filter((item) => item._id !== id));
-        setSwitchSaveMovies(switchSaveMovies.filter((item) => item._id !== id))
+        movies = saveMovies.filter((item) => item._id !== id);
+        switchMovies = switchSaveMovies.filter((item) => item._id !== id)
+        setSaveMovies(movies);
+        setSwitchSaveMovies(switchMovies);
+        addLocalStorage('saveMovies', movies);
+        addLocalStorage('switchSaveMovies', switchMovies);
       })
       .catch((err) => {console.log(err)})
   }
 
-  const handleLikeMovie = (e) => {                          // реакция на лайк, выбор удаления или сохранения
+  const handleLikeMovie = (e) => {         // реакция на лайк, выбор удаления или сохранения
     if (!e.isLike) {
       addNewMovie(e.e)
     } else {
-      e.e.id ? deleteMovie(saveMovies.filter((item) => item.movieId === e.e.id)[0]._id)
-      : deleteMovie(saveMovies.filter((item) => item.movieId === e.e.movieId)[0]._id)
+      e.e.id ? deleteMovie(saveMovies.filter((item) => Number(item.movieId) === e.e.id)[0]._id)
+      : deleteMovie(saveMovies.filter((item) => Number(item.movieId) === Number(e.e.movieId))[0]._id)
     }
   }
 
   const initialProfil = (token) => {                      // запрос данных профиля при входе
     mainApi.getUserProfil(token)
       .then((res) => {
-        setCurrentUser(res.data);
-        addLocalStorege('currentUser', res.data)
+        setCurrentUser(res);
+        addLocalStorage('currentUser', res)
       })
       .catch((err) => alert('загрузка профиля', err))
   }
@@ -208,7 +224,7 @@ const App = () => {
     console.log(data)
     mainApi.correctProfil(data, token)
       .then((res) => {
-        setCurrentUser(res.data);
+        setCurrentUser(res);
         alert('Данные профиля успешно изменены')
       })
       .catch((err) => alert('изменение профиля: ошибочка', err));
@@ -292,6 +308,8 @@ const App = () => {
 
   const hahdleOutAccount = () => {
     localStorage.clear();
+    localStorage.removeItem('swithMovies');
+    localStorage.removeItem('searchMovies')
     setCheckbox(false);
     setLoggedIn(false);
     setBackgroundHeader('#dddee3')

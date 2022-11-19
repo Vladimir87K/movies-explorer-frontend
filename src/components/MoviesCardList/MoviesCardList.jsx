@@ -18,7 +18,8 @@ const MoviesCardList = (props) => {
             checkbox={props.checkbox}
             movie={movie}
             isDelete={props.isDelete}
-            isLike={props.saveMovies !== undefined ? (props.saveMovies.some((item) => item.movieId === movie.id ? true : false)) : undefined}
+            saveMovies={props.saveMovies}
+            isLike={props.saveMovies !== undefined ? (props.saveMovies.some((item) => Number(item.movieId) === movie.id ? true : false)) : undefined}
           />)
         ))}
       </div>
