@@ -50,6 +50,10 @@
   cursor: pointer;
 }
 
+.navigation__link_action {
+  text-decoration: underline #000 2px;
+}
+
 .navigation__link-accaunt {
   display: flex;
   align-items: center;
