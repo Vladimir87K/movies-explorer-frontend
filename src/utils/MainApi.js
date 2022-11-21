@@ -72,7 +72,7 @@ class MainApi {
             })
         })
         .then(this._checkError)
-        // .then((res) => res.data)
+        .then((res) => res.data)
   }
 
   autorizationProfil(data) {
@@ -87,6 +87,7 @@ class MainApi {
             })
         })
         .then(this._checkError)
+        .then((res) => res.data)
   }
 
   correctProfil(data, token) {
