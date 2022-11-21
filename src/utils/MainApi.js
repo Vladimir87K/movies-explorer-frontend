@@ -119,7 +119,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    urlBase: 'https://cors-anywhere.herokuapp.com/http://api.mymovies.nomoredomains.icu',
+    urlBase: 'http://api.mymovies.nomoredomains.icu',
     headers: {
         'Content-Type': 'application/json'
     }
