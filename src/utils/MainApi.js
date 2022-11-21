@@ -119,7 +119,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    urlBase: 'http://api.mymovies.nomoredomains.icu',
+    urlBase: 'http://api.mymovies.nomoredomains.club',
     headers: {
         'Content-Type': 'application/json'
     }
