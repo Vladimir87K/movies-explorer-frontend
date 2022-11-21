@@ -198,7 +198,7 @@ const App = () => {
         setCurrentUser(data);
         autorization(data);
       })
-      .catch((err) => console.log('регистрация неудачна', err.code));
+      .catch((err) => alert('регистрация неудачна', err));
   }
 
   const autorization = (data) => {                         // авторизация автоматическая и самостоятельная
@@ -217,7 +217,7 @@ const App = () => {
           alert('Что-то пошло не так, попробуйте что-нибудь изменить');
         }
       })
-      .catch((err) => alert('авторизацияЖ ошибка', err))
+      .catch((err) => alert('авторизация ошибка', err))
   }
 
   const correctProfil = (data) => {                         // изменение данных профиля
