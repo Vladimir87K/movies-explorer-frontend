@@ -27,7 +27,6 @@ const App = () => {
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);                  //факт ошибки
-  const [textError, setTextError] = useState('');             //текст ошибки
   const [dataMovies, setDataMovies] = useState([]);           //массив полученных фильмов
   const [saveMovies, setSaveMovies] = useState([]);           //массив сохраненных в профиле фильмов
   const [searchMovies, setSearchMovies] = useState([]);       //массив найденных фильмов после выполнения поиска
@@ -47,13 +46,13 @@ const App = () => {
       setLoggedIn(true);
       setToken(jwt);
       setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
-      // setBackgroundHeader('#fafafa')
       setDataMovies(JSON.parse(localStorage.getItem('dataMovies')));
-      
-      setSearchMovies(JSON.parse(localStorage.getItem('searchMovies')));
-      setSwitchtMovies(JSON.parse(localStorage.getItem('swithMovies')));
+      if (localStorage.getItem('searchMovies') !== 'undefined') {
+        setSearchMovies(JSON.parse(localStorage.getItem('searchMovies')));
+        setSwitchtMovies(JSON.parse(localStorage.getItem('swithMovies')));
+        setHandleMoviesList(true);
+      }
       setCheckbox(localStorage.getItem('checkbox'));
-      setHandleMoviesList(true);
       setError(false);
       if (localStorage.getItem('saveMovies') !== 'undefined') {
         setSaveMovies(JSON.parse(localStorage.getItem('saveMovies')));
@@ -120,7 +119,6 @@ const App = () => {
     .catch(err => {
       setLoading(false);
       setError(true);
-      setTextError(err.message);
       alert('ошибка загрузки базы данных фильмов', err)
     })
   }
@@ -274,6 +272,7 @@ const App = () => {
     let nameMovie = name.trim().toLowerCase();
     if (item === 1) {
       setLoading(true);
+      setHandleMoviesList(false)
       setSearchMovies([]);
       setSwitchtMovies([])
       dataMovies.map((movie) => {
@@ -289,6 +288,7 @@ const App = () => {
           setHandleMoviesList(true);
         } 
         setLoading(false);
+        setHandleMoviesList(true)
       })
       localStorage.setItem('searchName', name);
     } else if (item === 2) {
