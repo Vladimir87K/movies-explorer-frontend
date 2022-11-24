@@ -9,7 +9,7 @@ const Movies = (props) => {
   const [search, setSearch] = useState(false)
 
   useEffect(() => {
-  if (props.searchMovies.length !== 0) {
+  if (props.searchMovies.length !== 0 || props.searchMovies !== null) {
     setSearch(true);
   } else {
     setSearch(false);
@@ -42,7 +42,7 @@ const Movies = (props) => {
       <MoviesCardList
         saveMovies={props.saveMovies}
         searchMovies={props.searchMovies}
-        handleMoviesList={props.handleMoviesList}
+        handleMoviesList={search && props.handleMoviesList}
         handleLikeMovie={props.handleLikeMovie}
         viemCountMovies={props.viemCountMovies}
         showAddMovies={props.showAddMovies}
@@ -52,4 +52,4 @@ const Movies = (props) => {
   )
 }
 
-export default Movies;
+export default Movies; 

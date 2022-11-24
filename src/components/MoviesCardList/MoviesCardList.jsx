@@ -3,7 +3,12 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 const MoviesCardList = (props) => {
-
+  const handleLike = (movie) => {
+    if (props.saveMovies.length < 1 || props.saveMovies == null) {
+      return false;
+    }
+    return props.saveMovies.some((item) => Number(item.movieId) === movie.id ? true : false);
+  }
   return (
     <div className={`movieCardList ${!props.handleMoviesList && 'movieCardList_inactive'}`}>
       <div className='cardList'>
@@ -19,7 +24,7 @@ const MoviesCardList = (props) => {
             movie={movie}
             isDelete={props.isDelete}
             saveMovies={props.saveMovies}
-            isLike={props.saveMovies !== undefined ? (props.saveMovies.some((item) => Number(item.movieId) === movie.id ? true : false)) : undefined}
+            isLike={props.saveMovies !== undefined ? handleLike(movie) : undefined}
           />)
         ))}
       </div>

@@ -22,6 +22,7 @@ class MainApi {
                 }
           })
           .then(this._checkError)
+          .then((res) => res.data)
   }
 
   addNewMovies(data, token) {
@@ -46,6 +47,7 @@ class MainApi {
               })
           })
           .then(this._checkError)
+          .then((res) => res.data)
   }
 
   deleteMovies(cardId, token) {
@@ -119,7 +121,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    urlBase: 'http://api.mymovies.nomoredomains.club',
+    urlBase: 'https://api.mymovies.nomoredomains.club',
     headers: {
         'Content-Type': 'application/json'
     }

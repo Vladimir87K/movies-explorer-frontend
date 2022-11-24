@@ -185,8 +185,8 @@ const App = () => {
   const initialProfil = (token) => {                      // запрос данных профиля при входе
     mainApi.getUserProfil(token)
       .then((res) => {
-        setCurrentUser(res);
-        addLocalStorage('currentUser', res)
+        setCurrentUser(res.data);
+        addLocalStorage('currentUser', res.data)
       })
       .catch((err) => alert('загрузка профиля', err))
   }
