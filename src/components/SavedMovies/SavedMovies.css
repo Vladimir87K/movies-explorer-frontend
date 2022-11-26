@@ -1,8 +1,14 @@
 .savedMovies {
-  width: 98vw;
+  width: 1280px;
   box-sizing: border-box;
   padding: 0 70px;
   background-color: #FAFAFA;
+}
+
+@media screen and (max-width: 1279px) {
+  .savedMovies {
+    width: 98vw;
+  }
 }
 
 @media screen and (max-width: 868px) {

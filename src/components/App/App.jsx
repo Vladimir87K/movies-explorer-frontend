@@ -39,8 +39,9 @@ const App = () => {
   const [viemCountMovies, setViemCountMovies] = useState(0); // количество фильмов на экране при первоначальной загрузке
   const [viemAddCountMovies, setViemAddCountMovies] = useState(0);   // количество фильмов на экране после нажатия кнопки еще
   const [viemBtn, setViemBtn] = useState(true);
+  const [search, setSearch] = useState(false);
 
-  useEffect (() => {
+    useEffect (() => {
     const jwt = localStorage.getItem('JWT');
     if (jwt) {
       setLoggedIn(true);
@@ -84,7 +85,7 @@ const App = () => {
   useEffect (() => {                                     // показывать кнопку еще или нет
     let viemMovie = !checkbox ? searchMovies : switchSaveMovies;
     if (viemMovie !== null) {
-      if (viemMovie.length >= viemCountMovies) { 
+      if (viemMovie.length > viemCountMovies) { 
         setViemBtn(true);
       } else {
         setViemBtn(false);
@@ -109,15 +110,16 @@ const App = () => {
   }
 
   const loadDataMovies = () => {                          // загрузка исходного массива фильмов
-    setLoading(true);
-    moviesApi.then((data) => {
+    // setLoading(true);
+    moviesApi.getDataMovies()
+    .then((data) => {
       setLoading(false);
       setError(false);
       setDataMovies(data);
       addLocalStorage('dataMovies', data)
     })
     .catch(err => {
-      setLoading(false);
+      // setLoading(false);
       setError(true);
       alert('ошибка загрузки базы данных фильмов', err)
     })
@@ -125,18 +127,18 @@ const App = () => {
 
   const loadDataSavedMovies = (token) => {                // загрузка фильмов с профиля
     mainApi.getInitialMovieList(token)
-            .then((res) => {
-              setSaveMovies(res);
-              let switchMovies = res.filter((movie) => movie.duration <= 40);
-              setSwitchSaveMovies(switchMovies);
-              if (res !== undefined) {
-                addLocalStorage('saveMovies', res);
-                addLocalStorage('switchSaveMovies', switchMovies);
-              }
-            })
-            .catch((err) => {
-              alert('загрузка сохраненных фильмов: ошибка', err);
-            })
+      .then((res) => {
+        setSaveMovies(res);
+        let switchMovies = res.filter((movie) => movie.duration <= 40);
+        setSwitchSaveMovies(switchMovies);
+        if (res !== undefined) {
+          addLocalStorage('saveMovies', res);
+          addLocalStorage('switchSaveMovies', switchMovies);
+        }
+      })
+      .catch((err) => {
+        alert('загрузка сохраненных фильмов: ошибка', err);
+      })
   }
 
   const addNewMovie = (movie) => {                        // реакция на лайк - сохранение фильма в свой профиль
@@ -267,12 +269,29 @@ const App = () => {
     setBackgroundHeader('#fafafa');
   }
 
-  const handleSearchMovie =  (data) => {
+  const handleLoading = () => {           // выведение лоадера и скрытие карточек
+    setLoading(true);   
+    setHandleMoviesList(false);
+    setTimeout(() => {
+      setLoading(false);
+      setHandleMoviesList(true);
+    }, 1000);
+  }
+
+  useEffect(() => {                       // отслеживание изменения массива поиска
+    if (searchMovies.length !== 0) {
+      setSearch(true);
+      handleLoading();
+    } else {
+      setSearch(false);
+    }
+  }, [searchMovies] )
+  
+
+  const handleSearchMovie = (data) => {           // проведение поиска фильма по названию 
     let {name, item} = data;
     let nameMovie = name.trim().toLowerCase();
     if (item === 1) {
-      setLoading(true);
-      setHandleMoviesList(false)
       setSearchMovies([]);
       setSwitchtMovies([])
       dataMovies.map((movie) => {
@@ -285,10 +304,7 @@ const App = () => {
           if (movie.duration <= 40) {
             setSwitchtMovies((prev) => [...prev, movie])
           }
-          setHandleMoviesList(true);
         } 
-        setLoading(false);
-        setHandleMoviesList(true)
       })
       localStorage.setItem('searchName', name);
     } else if (item === 2) {
@@ -308,7 +324,7 @@ const App = () => {
   const hahdleOutAccount = () => {
     localStorage.clear();
     localStorage.removeItem('swithMovies');
-    localStorage.removeItem('searchMovies')
+    localStorage.removeItem('searchMovies');
     setCheckbox(false);
     setLoggedIn(false);
     setBackgroundHeader('#dddee3')
@@ -372,6 +388,7 @@ const App = () => {
                     viemCountMovies={viemCountMovies}
                     showAddMovies={handleAddMovies}
                     viemBtn={viemBtn}
+                    search={search}
                   />
                   </ProtectedRoute>
                 } />
