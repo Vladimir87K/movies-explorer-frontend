@@ -21,10 +21,6 @@ const SearchForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.onSubmit({name, item});
-    if (item === 1) {
-      
-    }
-    setName('');
   }
 
   return (

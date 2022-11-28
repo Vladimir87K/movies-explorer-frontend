@@ -9,7 +9,8 @@ class MainApi {
       if (res.ok) {
           return res.json();
       }  else {
-          Promise.reject(`Произошла ошибка: ${res.status}`);
+          throw res;
+          // (`Произошла ошибка: ${res.status}`);
       }
     }
 
@@ -106,6 +107,7 @@ class MainApi {
               })
           })
           .then(this._checkError)
+          .then((res) => res.data)
   }
 
   getUserProfil(token) {

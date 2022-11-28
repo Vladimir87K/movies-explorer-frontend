@@ -76,7 +76,6 @@ const Profile = (props) => {
     setName(userContext.name);
     setEmail(userContext.email);
     setValidate(false);
-    console.log('коррекция в пути!!1', name, email);
   }
 
   return (

@@ -48,19 +48,25 @@ const App = () => {
       setToken(jwt);
       setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
       setDataMovies(JSON.parse(localStorage.getItem('dataMovies')));
-      if (localStorage.getItem('searchMovies') !== 'undefined') {
+      setCheckbox(localStorage.getItem('checkbox'));
+      setError(false);
+      if (localStorage.getItem('searchName')) {
         setSearchMovies(JSON.parse(localStorage.getItem('searchMovies')));
         setSwitchtMovies(JSON.parse(localStorage.getItem('swithMovies')));
         setHandleMoviesList(true);
+      } else {
+        setHandleMoviesList(false);
       }
-      setCheckbox(localStorage.getItem('checkbox'));
-      setError(false);
       if (localStorage.getItem('saveMovies') !== 'undefined') {
         setSaveMovies(JSON.parse(localStorage.getItem('saveMovies')));
         setSwitchSaveMovies(JSON.parse(localStorage.getItem('switchSaveMovies')));
       }
       if (location.pathname !== '/') {
         setBackgroundHeader('#fafafa');
+      }
+      if (location.pathname === '/signin' || location.pathname === '/signup') {
+        navigate('/');
+        setBackgroundHeader('#dddee3');
       }
     }
   }, [])
@@ -78,7 +84,7 @@ const App = () => {
       setViemAddCountMovies(2);
     } else {
       setViemCountMovies(5);
-      setViemAddCountMovies(2);
+      setViemAddCountMovies(5);
     }
   }, [searchMovies])
 
@@ -110,7 +116,6 @@ const App = () => {
   }
 
   const loadDataMovies = () => {                          // загрузка исходного массива фильмов
-    // setLoading(true);
     moviesApi.getDataMovies()
     .then((data) => {
       setLoading(false);
@@ -119,7 +124,6 @@ const App = () => {
       addLocalStorage('dataMovies', data)
     })
     .catch(err => {
-      // setLoading(false);
       setError(true);
       alert('ошибка загрузки базы данных фильмов', err)
     })
@@ -137,7 +141,7 @@ const App = () => {
         }
       })
       .catch((err) => {
-        alert('загрузка сохраненных фильмов: ошибка', err);
+        alert('загрузка обращения к базе данных сохраненных фильмов', err);
       })
   }
 
@@ -155,7 +159,15 @@ const App = () => {
             addLocalStorage('switchSaveMovies', switchMovies);
           }
         })
-        .catch((err) => {alert('Что-то пошло не так,', err)})
+        .catch((err) => {
+          console.log(err)
+          if (err.status === 401) {
+            alert('Ошибка авторизации, войдите в свой аккаунт заново.')
+            hahdleOutAccount();
+          } else {
+            alert('Неуточненная ошибка');
+          }
+      })
   }
 
   const deleteMovie = (id) => {                            // удаление фильма из сохраненной базы
@@ -170,7 +182,15 @@ const App = () => {
         addLocalStorage('saveMovies', movies);
         addLocalStorage('switchSaveMovies', switchMovies);
       })
-      .catch((err) => {console.log(err)})
+      .catch((err) => {
+        console.log(err)
+        if (err.status === 401) {
+          alert('Ошибка авторизации, войдите в свой аккаунт заново.');
+          hahdleOutAccount();
+        } else {
+          alert('Неуточненная ошибка.');
+        }
+      })
   }
 
   const handleLikeMovie = (e) => {         // реакция на лайк, выбор удаления или сохранения
@@ -186,19 +206,25 @@ const App = () => {
     mainApi.getUserProfil(token)
       .then((res) => {
         setCurrentUser(res.data);
-        addLocalStorage('currentUser', res.data)
+        addLocalStorage('currentUser', res.data);
       })
-      .catch((err) => alert('загрузка профиля', err))
+      .catch((err) => alert('Ошибка загрузки профиля', err))
   }
 
   const registration = (data) => {                        // проведение регистрации
     setPassword(data.password);
     mainApi.registrationProfil(data)
       .then((res) => {
-        setCurrentUser(data);
-        autorization(data);
+          setCurrentUser(data);
+          autorization(data);
       })
-      .catch((err) => alert('регистрация неудачна', err));
+      .catch((err) => {
+        if (err.status === 409) {
+          alert('Указанный Email уже сохранен.');
+        } else {
+          alert('регистрация неудачна', err);
+        }
+      });
   }
 
   const autorization = (data) => {                         // авторизация автоматическая и самостоятельная
@@ -217,7 +243,7 @@ const App = () => {
           alert('Что-то пошло не так, попробуйте что-нибудь изменить');
         }
       })
-      .catch((err) => alert('авторизация ошибка', err))
+      .catch((err) => alert('Неправильная почта или пароль'));
   }
 
   const correctProfil = (data) => {                         // изменение данных профиля
@@ -226,7 +252,15 @@ const App = () => {
         setCurrentUser(res);
         alert('Данные профиля успешно изменены')
       })
-      .catch((err) => alert('изменение профиля: ошибочка', err));
+      .catch((err) => {
+        console.log(err)
+          if (err.status === 401) {
+            alert('Ошибка авторизации, войдите в свой аккаунт заново.');
+            hahdleOutAccount();
+          } else {
+            alert('Извините, произошла непредвиденная ошибка.');
+          }
+      });
   }
 
   const handleRegister = () => { 
@@ -292,6 +326,7 @@ const App = () => {
     let {name, item} = data;
     let nameMovie = name.trim().toLowerCase();
     if (item === 1) {
+
       setSearchMovies([]);
       setSwitchtMovies([])
       dataMovies.map((movie) => {
@@ -325,9 +360,21 @@ const App = () => {
     localStorage.clear();
     localStorage.removeItem('swithMovies');
     localStorage.removeItem('searchMovies');
-    setCheckbox(false);
+    setCurrentUser({});
     setLoggedIn(false);
-    setBackgroundHeader('#dddee3')
+    setError(false);
+    setBackgroundHeader('#dddee3');
+    setDataMovies([]);
+    setSaveMovies([]);
+    setSearchMovies([]);
+    setSwitchtMovies([]);
+    setSaveViemMovies([]);
+    setSwitchSaveMovies([]);
+    setHandleMoviesList(false);
+    setCheckbox(false);
+    setCheckboxSaveMovies(false);
+    setViemCountMovies(0);
+    setViemAddCountMovies(0);
     navigate('/');
   }
 
