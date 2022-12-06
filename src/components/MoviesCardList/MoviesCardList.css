@@ -1,21 +1,30 @@
 .movieCardList {
-  
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.movieCardList_inactive {
+  display: none;
 }
 
 .cardList {
   padding-top: 70px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, auto));
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-column-gap: 20px;
   grid-row-gap: 32px;
 }
 
 .movieCardList__button {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   padding: 50px 0 80px;
+}
+
+.movieCardList__button_action{
+  display: flex;
 }
 
 .movieCardList__btn {
@@ -34,9 +43,16 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 868px) {
+@media screen and (max-width: 1279px) {
+  .cardList {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 1006px) {
   .cardList {
     grid-template-columns: 1fr 1fr;
+    width: 100%;
   }
 }
 

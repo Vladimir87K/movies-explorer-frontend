@@ -31,6 +31,10 @@
   box-sizing: border-box;
 }
 
+.popup__form {
+  width: 100%;
+}
+
 .popup__form-subtitle {
   font-weight: 400;
   font-size: 10px;
@@ -56,6 +60,10 @@
   outline: 1px solid #3456F3;
 }
 
+.popup__form-input_invalid {
+  color: #EE3465
+}
+
 .popup__form-error {
   font-weight: 400;
   font-size: 10px;
@@ -64,7 +72,8 @@
   opacity: 0;
   z-index: 1;
   position: relative;
-  top: -10px
+  top:-5px;
+  height: 10px;
 }
 
 .popup__form-error_action {
@@ -78,7 +87,7 @@
 
 .popup__form-save {
   width: 396px;
-  background: #3456F3;
+  background-color: #3456F3;
   border-radius: 3px;
   font-weight: 500;
   font-size: 14px;
@@ -88,6 +97,10 @@
   padding: 15px 0;
   border: none;
   box-sizing: border-box;
+}
+
+.popup__form-save_disabled {
+  background-color: #808080;
 }
 
 .popup__form-save:hover {

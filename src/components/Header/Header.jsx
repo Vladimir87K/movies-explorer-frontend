@@ -11,7 +11,7 @@ const Header = (props) => {
         <img src={logo} alt='логотип' className='header__logo' />
       </p>
         <nav className={`header__entrance ${!props.loggedIn && 'header__entrance_opened'}`}>
-          <button onClick={props.handleRegister} type='button' className='header__entrance-btn'>Регистрация</button>
+          <button onClick={props.handleRegister} style={{backgroundColor: props.bacgroundHeader}} type='button' className='header__entrance-btn'>Регистрация</button>
           <button onClick={props.handleLogin} type='button' className='header__entrance-btn'>Войти</button>
         </nav>
         <button onClick={props.handleNavigation} style={{backgroundColor: props.bacgroundHeader}} type='button' className={`header__burger ${!props.loggedIn && 'header__burger_close'}`}></button>

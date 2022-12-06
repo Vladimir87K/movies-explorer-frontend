@@ -2,10 +2,15 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
   position: relative;
   min-height: calc(100vh - 270px);
 }
 
+.main {
+  max-width: 1280px;
+  min-height: calc(100vh - 270px);
+}
 /* .App {
   text-align: center;
 }

@@ -12,6 +12,10 @@
   margin: 0;
 }
 
+.search-movie__form {
+  width: 100%;
+} 
+
 .search-movie__image {
   position: absolute;
   left: 0;
@@ -35,6 +39,7 @@
   box-sizing: border-box;
   padding: 0;
   outline: none;
+  width: 100%;
 }
 
 .search-movie__input:focus {
@@ -102,6 +107,7 @@
 @media screen and (max-width: 868px) {
   .search {
     padding: 86px 0 62px;  
+    width: 100%;
   }
 
   .search-movie__input {
@@ -116,6 +122,10 @@
 
   .search-movie {
     justify-content: space-between;
+  }
+
+  .search-movie__form {
+    display: flex;
   }
 
   .search-movie__image {
